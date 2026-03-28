@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-burgundy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>HomeHub — Shopping Bubbles (Empty Master List)</title>
+<style>
+  :root, .theme-burgundy {
+    --color-primary: #630606;
+    --color-background: #F5F2E7;
+    --color-surface: #FFFFFF;
+    --color-muted: #8E806A;
+    --color-bubble-bg: #630606;
+    --color-error: #991B1B;
+    --color-success: #065F46;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--color-background);
+    color: #1a1a1a;
+    width: 390px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hub-header {
+    background: var(--color-primary);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .back-btn { color: rgba(255,255,255,0.85); font-size: 20px; cursor: pointer; padding: 4px; }
+  .hub-header-text { flex: 1; }
+  .hub-header-title { font-size: 18px; font-weight: 700; color: white; }
+  .hub-header-subtitle { font-size: 11px; color: rgba(255,255,255,0.7); }
+  .header-action { color: rgba(255,255,255,0.85); font-size: 22px; cursor: pointer; padding: 4px; }
+
+  .view-tabs {
+    background: var(--color-primary);
+    padding: 0 16px 12px;
+    display: flex;
+  }
+  .view-tab {
+    flex: 1;
+    padding: 7px 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  .view-tab.active {
+    color: white;
+    border-bottom-color: white;
+  }
+
+  /* Empty state container */
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px 100px;
+    text-align: center;
+  }
+
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  .empty-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+
+  .empty-subtitle {
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+
+  /* Smart Bubbles section */
+  .bubbles-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    align-self: flex-start;
+  }
+
+  .bubbles-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  /* Smart Bubble — filled style */
+  .bubble {
+    /* --color-bubble-bg at 10% opacity = rgba(99, 6, 6, 0.10) */
+    background: rgba(99, 6, 6, 0.10);
+    border: 1.5px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 9999px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.15s;
+  }
+  .bubble:hover { background: rgba(99, 6, 6, 0.18); }
+  .bubble-icon { font-size: 16px; }
+
+  /* "Keep Empty" dashed bubble */
+  .bubble-keep-empty {
+    background: transparent;
+    border: 1.5px dashed var(--color-muted);
+    color: var(--color-muted);
+    border-radius: 9999px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .bubble-keep-empty:hover { border-color: #1a1a1a; color: #1a1a1a; }
+
+  /* Bottom nav */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 390px;
+    background: var(--color-surface);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    display: flex; align-items: stretch; z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px 0 10px; gap: 3px; cursor: pointer;
+  }
+  .nav-icon { font-size: 22px; color: var(--color-muted); }
+  .nav-icon.active { color: var(--color-primary); }
+  .nav-label { font-size: 11px; font-weight: 500; color: var(--color-muted); }
+  .nav-label.active { color: var(--color-primary); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="hub-header">
+  <div class="back-btn">←</div>
+  <div class="hub-header-text">
+    <div class="hub-header-title">Grocery</div>
+    <div class="hub-header-subtitle">Master list · 0 items</div>
+  </div>
+  <div class="header-action">⋮</div>
+</div>
+
+<div class="view-tabs">
+  <div class="view-tab active">Master List</div>
+  <div class="view-tab">Active List</div>
+</div>
+
+<!-- Empty state with Smart Bubbles -->
+<div class="empty-state">
+
+  <div class="empty-icon">🛒</div>
+  <div class="empty-title">Your list is empty</div>
+  <div class="empty-subtitle">Start by adding items manually, or pick a context below to fill the list with suggested starter items.</div>
+
+  <div class="bubbles-label">Quick-start with a context</div>
+
+  <div class="bubbles-row">
+    <div class="bubble">
+      <span class="bubble-icon">🥦</span> Grocery
+    </div>
+    <div class="bubble">
+      <span class="bubble-icon">💊</span> Pharma
+    </div>
+    <div class="bubble">
+      <span class="bubble-icon">⛺</span> Camping
+    </div>
+  </div>
+
+  <!-- "Keep Empty" dashed bubble — lets user dismiss suggestions and start with a blank list -->
+  <div class="bubble-keep-empty">
+    <span style="font-size:16px">—</span> Keep Empty
+  </div>
+
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item">
+    <div class="nav-icon active">🛒</div>
+    <div class="nav-label active">Shopping</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">✅</div>
+    <div class="nav-label">Tasks</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">🎟️</div>
+    <div class="nav-label">Vouchers</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">📅</div>
+    <div class="nav-label">Reservations</div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -142,6 +142,29 @@
   .item-qty { font-size: 13px; color: var(--color-muted); margin-top: 2px; }
   .item-qty.done { color: rgba(142,128,106,0.6); }
 
+  /* Empty active list state — per UI_DESIGN_SYSTEM §4.2 */
+  .empty-active-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 32px;
+    text-align: center;
+    gap: 10px;
+  }
+  .empty-active-icon { font-size: 48px; opacity: 0.4; margin-bottom: 6px; }
+  .empty-active-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+  .empty-active-body {
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
   /* Checked section divider */
   .checked-divider {
     display: flex;
@@ -294,6 +317,32 @@
     </div>
   </div>
 
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     EMPTY ACTIVE LIST STATE — UI_DESIGN_SYSTEM §4.2
+     Shown when a session is started but no items have been
+     tapped from the master list yet.
+     ═══════════════════════════════════════════════════════ -->
+
+<!-- Conceptual separator: this section shows the same screen in its zero-item state -->
+<div style="background: rgba(142,128,106,0.15); padding: 8px 16px; display:flex; align-items:center; gap:8px;">
+  <div style="flex:1; height:1px; background:rgba(142,128,106,0.3);"></div>
+  <div style="font-size:11px; font-weight:700; color:var(--color-muted); text-transform:uppercase; letter-spacing:0.4px; white-space:nowrap;">
+    ↓ Empty state (no items tapped yet)
+  </div>
+  <div style="flex:1; height:1px; background:rgba(142,128,106,0.3);"></div>
+</div>
+
+<!-- Empty active list state per UI_DESIGN_SYSTEM §4.2:
+     "Ready to shop? Tap items from your master list to add them here." -->
+<div class="empty-active-state">
+  <div class="empty-active-icon">🛒</div>
+  <div class="empty-active-title">Ready to shop?</div>
+  <div class="empty-active-body">
+    Tap items from your master list to add them here.
+    Your active session will show up-to-date progress as you shop.
+  </div>
 </div>
 
 <!-- Bottom Nav -->

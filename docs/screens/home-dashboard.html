@@ -42,7 +42,27 @@
     font-weight: 600;
     color: #92400E;
   }
-  .attention-banner-arrow { color: #D97706; font-size: 16px; }
+  .attention-banner-arrow { color: #D97706; font-size: 16px; display: flex; align-items: center; }
+  /* Toast notification overlay — shown when a partner joins */
+  .toast {
+    position: fixed;
+    bottom: calc(64px + 16px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    color: white;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -2px rgba(0,0,0,0.05);
+    z-index: 40;
+    white-space: nowrap;
+  }
+  .toast-icon { font-size: 18px; }
 
   /* App header */
   .app-header {
@@ -216,7 +236,15 @@
 <div class="attention-banner">
   <div class="attention-banner-icon">⚠️</div>
   <div class="attention-banner-text">2 items need your attention</div>
-  <div class="attention-banner-arrow">→</div>
+  <!-- ⚠ Do NOT use a hardcoded directional arrow (→ or ←) here.
+       Use a CSS-flipped SVG chevron that respects the dir attribute for RTL support.
+       See UI_DESIGN_SYSTEM.md §5.3 for the RTL treatment rule. -->
+  <div class="attention-banner-arrow">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+         style="display:block; transform: scaleX(var(--chevron-dir, 1));">
+      <path d="M6 3L11 8L6 13" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
 </div>
 
 <!-- App header -->
@@ -287,6 +315,14 @@
     </div>
 
   </div>
+</div>
+
+<!-- Toast overlay: "Partner joined!" in-app notification (SCR-03)
+     Shown briefly after a new household member accepts an invite code.
+     z-index: 40 (--z-toast) per UI_DESIGN_SYSTEM §1.6. -->
+<div class="toast">
+  <span class="toast-icon">🎉</span>
+  Dan Cohen joined your household!
 </div>
 
 <!-- Bottom Nav -->
