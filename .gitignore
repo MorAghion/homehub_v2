@@ -2,3 +2,8 @@
 .claude/
 .runtime/
 node_modules/
+
+# E2E test artifacts
+playwright-report/
+test-results/
+.env.test
