@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-burgundy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>HomeHub — Active List</title>
+<style>
+  :root, .theme-burgundy {
+    --color-primary: #630606;
+    --color-background: #F5F2E7;
+    --color-surface: #FFFFFF;
+    --color-muted: #8E806A;
+    --color-error: #991B1B;
+    --color-success: #065F46;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--color-background);
+    color: #1a1a1a;
+    width: 390px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hub-header {
+    background: var(--color-primary);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .back-btn { color: rgba(255,255,255,0.85); font-size: 20px; cursor: pointer; padding: 4px; }
+  .hub-header-text { flex: 1; }
+  .hub-header-title { font-size: 18px; font-weight: 700; color: white; }
+  .hub-header-subtitle { font-size: 11px; color: rgba(255,255,255,0.7); }
+  .header-action { color: rgba(255,255,255,0.85); font-size: 22px; cursor: pointer; padding: 4px; }
+
+  .view-tabs {
+    background: var(--color-primary);
+    padding: 0 16px 12px;
+    display: flex;
+  }
+  .view-tab {
+    flex: 1;
+    padding: 7px 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  .view-tab.active {
+    color: white;
+    border-bottom-color: white;
+  }
+
+  /* Progress bar */
+  .progress-bar-area {
+    background: var(--color-surface);
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(142,128,106,0.15);
+  }
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .progress-label { font-size: 12px; color: var(--color-muted); font-weight: 500; }
+  .progress-label strong { color: var(--color-primary); }
+  .progress-bar-bg {
+    height: 6px;
+    background: rgba(142,128,106,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: 3px;
+    width: 45%;
+  }
+
+  .main-content { flex: 1; padding-bottom: 80px; }
+
+  .category-header {
+    padding: 10px 16px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .category-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Item row */
+  .item-row {
+    background: var(--color-surface);
+    border-bottom: 1px solid rgba(142,128,106,0.12);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+  }
+
+  .circle-checkbox {
+    width: 26px; height: 26px;
+    border: 2px solid rgba(142,128,106,0.5);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .circle-checkbox.checked {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+    font-size: 14px;
+  }
+
+  .item-content { flex: 1; min-width: 0; }
+  .item-name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-name.done {
+    text-decoration: line-through;
+    color: var(--color-muted);
+  }
+  .item-qty { font-size: 13px; color: var(--color-muted); margin-top: 2px; }
+  .item-qty.done { color: rgba(142,128,106,0.6); }
+
+  /* Checked section divider */
+  .checked-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px 6px;
+  }
+  .checked-divider-line { flex: 1; height: 1px; background: rgba(142,128,106,0.2); }
+  .checked-divider-text {
+    font-size: 12px;
+    color: var(--color-muted);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 390px;
+    background: var(--color-surface);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    display: flex; align-items: stretch; z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px 0 10px; gap: 3px; cursor: pointer;
+  }
+  .nav-icon { font-size: 22px; color: var(--color-muted); }
+  .nav-icon.active { color: var(--color-primary); }
+  .nav-label { font-size: 11px; font-weight: 500; color: var(--color-muted); }
+  .nav-label.active { color: var(--color-primary); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="hub-header">
+  <div class="back-btn">←</div>
+  <div class="hub-header-text">
+    <div class="hub-header-title">Supermarket</div>
+    <div class="hub-header-subtitle">Active list · 9 of 20 done</div>
+  </div>
+  <div class="header-action">✓✓</div>
+</div>
+
+<div class="view-tabs">
+  <div class="view-tab">Master List</div>
+  <div class="view-tab active">Active List</div>
+</div>
+
+<!-- Progress -->
+<div class="progress-bar-area">
+  <div class="progress-labels">
+    <div class="progress-label"><strong>9</strong> checked off</div>
+    <div class="progress-label"><strong>11</strong> remaining</div>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill"></div>
+  </div>
+</div>
+
+<div class="main-content">
+
+  <!-- Dairy — unchecked -->
+  <div class="category-header">
+    <div class="category-name">🥛 Dairy</div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox"></div>
+    <div class="item-content">
+      <div class="item-name">Milk</div>
+      <div class="item-qty">2 liters</div>
+    </div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox"></div>
+    <div class="item-content">
+      <div class="item-name">Greek Yogurt</div>
+      <div class="item-qty">500g</div>
+    </div>
+  </div>
+
+  <!-- Vegetables -->
+  <div class="category-header">
+    <div class="category-name">🥕 Vegetables</div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox"></div>
+    <div class="item-content">
+      <div class="item-name">Tomatoes</div>
+      <div class="item-qty">1 kg</div>
+    </div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox"></div>
+    <div class="item-content">
+      <div class="item-name">Cucumbers</div>
+      <div class="item-qty">4 pcs</div>
+    </div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox"></div>
+    <div class="item-content">
+      <div class="item-name">Onion</div>
+      <div class="item-qty">1 kg</div>
+    </div>
+  </div>
+
+  <!-- Checked divider -->
+  <div class="checked-divider">
+    <div class="checked-divider-line"></div>
+    <div class="checked-divider-text">Checked off (4)</div>
+    <div class="checked-divider-line"></div>
+  </div>
+
+  <!-- Checked items -->
+  <div class="item-row">
+    <div class="circle-checkbox checked">✓</div>
+    <div class="item-content">
+      <div class="item-name done">Yellow Cheese</div>
+      <div class="item-qty done">250g</div>
+    </div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox checked">✓</div>
+    <div class="item-content">
+      <div class="item-name done">Butter</div>
+      <div class="item-qty done">200g</div>
+    </div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox checked">✓</div>
+    <div class="item-content">
+      <div class="item-name done">Bread</div>
+      <div class="item-qty done">1 loaf</div>
+    </div>
+  </div>
+
+  <div class="item-row">
+    <div class="circle-checkbox checked">✓</div>
+    <div class="item-content">
+      <div class="item-name done">Pasta</div>
+      <div class="item-qty done">500g</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item">
+    <div class="nav-icon active">🛒</div>
+    <div class="nav-label active">Shopping</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">✅</div>
+    <div class="nav-label">Tasks</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">🎟️</div>
+    <div class="nav-label">Vouchers</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">📅</div>
+    <div class="nav-label">Reservations</div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-burgundy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>HomeHub — Vouchers Hub</title>
+<style>
+  :root, .theme-burgundy {
+    --color-primary: #630606;
+    --color-background: #F5F2E7;
+    --color-surface: #FFFFFF;
+    --color-muted: #8E806A;
+    --color-error: #991B1B;
+    --color-success: #065F46;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--color-background);
+    color: #1a1a1a;
+    width: 390px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hub-header {
+    background: var(--color-primary);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .back-btn { color: rgba(255,255,255,0.85); font-size: 20px; cursor: pointer; padding: 4px; }
+  .hub-header-text { flex: 1; }
+  .hub-header-title { font-size: 20px; font-weight: 700; color: white; }
+  .hub-header-subtitle { font-size: 12px; color: rgba(255,255,255,0.7); }
+  .header-action { color: rgba(255,255,255,0.85); font-size: 22px; cursor: pointer; padding: 4px; }
+
+  .main-content {
+    flex: 1;
+    padding: 16px;
+    padding-bottom: 100px;
+  }
+
+  /* Voucher grid — 2 columns */
+  .voucher-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .voucher-card {
+    background: var(--color-surface);
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+  }
+  .voucher-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.10); }
+
+  /* Color accent top strip */
+  .voucher-accent { height: 4px; }
+  .accent-green { background: linear-gradient(90deg, #065F46, #10B981); }
+  .accent-amber { background: linear-gradient(90deg, #D97706, #F59E0B); }
+  .accent-red { background: linear-gradient(90deg, #991B1B, #EF4444); }
+  .accent-blue { background: linear-gradient(90deg, #1E40AF, #3B82F6); }
+  .accent-purple { background: linear-gradient(90deg, #6D28D9, #A78BFA); }
+  .accent-muted { background: rgba(142,128,106,0.3); }
+
+  .voucher-body {
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .voucher-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+  .voucher-issuer {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .voucher-icons { display: flex; gap: 4px; }
+  .voucher-icon { font-size: 13px; color: var(--color-muted); }
+
+  .voucher-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    /* 2 line clamp */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .voucher-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color-primary);
+    letter-spacing: -0.5px;
+  }
+
+  .voucher-expiry-row {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .expiry-label {
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+  .expiry-value {
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .expiry-ok { color: var(--color-success); }
+  .expiry-soon { color: #D97706; }
+  .expiry-urgent { color: #EA580C; }
+  .expiry-expired { color: var(--color-error); }
+
+  /* Section label */
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  /* FAB */
+  .fab {
+    position: fixed;
+    bottom: calc(64px + 16px);
+    right: 16px;
+    width: 52px; height: 52px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 4px 12px rgba(99,6,6,0.35);
+    cursor: pointer;
+    z-index: 25;
+  }
+
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 390px;
+    background: var(--color-surface);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    display: flex; align-items: stretch; z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px 0 10px; gap: 3px; cursor: pointer;
+  }
+  .nav-icon { font-size: 22px; color: var(--color-muted); }
+  .nav-icon.active { color: var(--color-primary); }
+  .nav-label { font-size: 11px; font-weight: 500; color: var(--color-muted); }
+  .nav-label.active { color: var(--color-primary); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="hub-header">
+  <div class="back-btn">←</div>
+  <div class="hub-header-text">
+    <div class="hub-header-title">Vouchers</div>
+    <div class="hub-header-subtitle">BuyMe Cards · 5 vouchers</div>
+  </div>
+  <div class="header-action">⋮</div>
+</div>
+
+<div class="main-content">
+
+  <div class="section-label">BuyMe Cards — 5 vouchers</div>
+
+  <div class="voucher-grid">
+
+    <!-- Voucher 1 — good expiry -->
+    <div class="voucher-card">
+      <div class="voucher-accent accent-green"></div>
+      <div class="voucher-body">
+        <div class="voucher-top">
+          <div class="voucher-issuer">BuyMe</div>
+          <div class="voucher-icons">
+            <div class="voucher-icon">📋</div>
+          </div>
+        </div>
+        <div class="voucher-name">Zara Gift Card</div>
+        <div class="voucher-value">₪500</div>
+        <div class="voucher-expiry-row">
+          <div class="expiry-label">Exp:</div>
+          <div class="expiry-value expiry-ok">Dec 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voucher 2 — expiring soon -->
+    <div class="voucher-card">
+      <div class="voucher-accent accent-amber"></div>
+      <div class="voucher-body">
+        <div class="voucher-top">
+          <div class="voucher-issuer">Castro</div>
+          <div class="voucher-icons">
+            <div class="voucher-icon">🖼️</div>
+          </div>
+        </div>
+        <div class="voucher-name">Castro Store Credit</div>
+        <div class="voucher-value">₪250</div>
+        <div class="voucher-expiry-row">
+          <div class="expiry-label">Exp:</div>
+          <div class="expiry-value expiry-soon">⚠️ Apr 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voucher 3 — urgent expiry -->
+    <div class="voucher-card">
+      <div class="voucher-accent accent-red"></div>
+      <div class="voucher-body">
+        <div class="voucher-top">
+          <div class="voucher-issuer">Steimatzky</div>
+          <div class="voucher-icons">
+            <div class="voucher-icon">📋</div>
+          </div>
+        </div>
+        <div class="voucher-name">Book Voucher</div>
+        <div class="voucher-value">₪120</div>
+        <div class="voucher-expiry-row">
+          <div class="expiry-label">Exp:</div>
+          <div class="expiry-value expiry-urgent">🔥 Apr 5, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voucher 4 — no expiry -->
+    <div class="voucher-card">
+      <div class="voucher-accent accent-blue"></div>
+      <div class="voucher-body">
+        <div class="voucher-top">
+          <div class="voucher-issuer">Amazon</div>
+          <div class="voucher-icons">
+            <div class="voucher-icon">📋</div>
+          </div>
+        </div>
+        <div class="voucher-name">Amazon Gift Card</div>
+        <div class="voucher-value">$50</div>
+        <div class="voucher-expiry-row">
+          <div class="expiry-label">Exp:</div>
+          <div class="expiry-value" style="color:var(--color-muted)">No expiry</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voucher 5 — expired -->
+    <div class="voucher-card" style="opacity:0.65">
+      <div class="voucher-accent accent-muted"></div>
+      <div class="voucher-body">
+        <div class="voucher-top">
+          <div class="voucher-issuer">Shufersal</div>
+          <div class="voucher-icons"></div>
+        </div>
+        <div class="voucher-name">Supermarket Voucher</div>
+        <div class="voucher-value" style="color:var(--color-muted)">₪80</div>
+        <div class="voucher-expiry-row">
+          <div class="expiry-label">Exp:</div>
+          <div class="expiry-value expiry-expired">✗ Expired</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FAB -->
+<div class="fab">+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item">
+    <div class="nav-icon">🛒</div>
+    <div class="nav-label">Shopping</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">✅</div>
+    <div class="nav-label">Tasks</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon active">🎟️</div>
+    <div class="nav-label active">Vouchers</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">📅</div>
+    <div class="nav-label">Reservations</div>
+  </div>
+</div>
+
+</body>
+</html>

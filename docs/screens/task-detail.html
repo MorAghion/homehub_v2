@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-burgundy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>HomeHub — Task Detail</title>
+<style>
+  :root, .theme-burgundy {
+    --color-primary: #630606;
+    --color-background: #F5F2E7;
+    --color-surface: #FFFFFF;
+    --color-muted: #8E806A;
+    --color-error: #991B1B;
+    --color-success: #065F46;
+    --color-urgency-low: #6B7280;
+    --color-urgency-medium: #D97706;
+    --color-urgency-high: #EA580C;
+    --color-urgency-critical: #DC2626;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--color-background);
+    color: #1a1a1a;
+    width: 390px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hub-header {
+    background: var(--color-primary);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .back-btn { color: rgba(255,255,255,0.85); font-size: 20px; cursor: pointer; padding: 4px; }
+  .hub-header-text { flex: 1; }
+  .hub-header-title { font-size: 18px; font-weight: 700; color: white; }
+  .hub-header-subtitle { font-size: 11px; color: rgba(255,255,255,0.7); }
+  .header-action { color: rgba(255,255,255,0.85); font-size: 18px; cursor: pointer; padding: 4px; }
+
+  .main-content {
+    flex: 1;
+    padding: 20px 16px;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Task card */
+  .task-card {
+    background: var(--color-surface);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  /* Urgency strip */
+  .urgency-strip {
+    background: #DC2626;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .urgency-strip-icon { font-size: 14px; }
+  .urgency-strip-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Task header */
+  .task-header {
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid rgba(142,128,106,0.12);
+  }
+  .task-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .task-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge-critical { background: #FEE2E2; color: #DC2626; }
+  .badge-status-inprogress { background: #DBEAFE; color: #1D4ED8; }
+  .badge-subhub { background: rgba(99,6,6,0.08); color: var(--color-primary); }
+
+  /* Task fields */
+  .task-fields {
+    padding: 0;
+  }
+  .field-row {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(142,128,106,0.10);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .field-row:last-child { border-bottom: none; }
+  .field-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; width: 24px; text-align: center; }
+  .field-body { flex: 1; }
+  .field-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+  }
+  .field-value {
+    font-size: 15px;
+    color: #1a1a1a;
+    line-height: 1.4;
+  }
+  .field-value.muted { color: var(--color-muted); font-style: italic; }
+
+  /* Assignee chip */
+  .assignee-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,6,6,0.06);
+    border-radius: 9999px;
+    padding: 4px 10px 4px 4px;
+  }
+  .assignee-avatar {
+    width: 26px; height: 26px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+  }
+  .assignee-name { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+
+  /* Action buttons */
+  .action-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+  }
+  .btn-primary { background: var(--color-primary); color: white; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1.5px solid rgba(99,6,6,0.4);
+  }
+  .btn-danger {
+    background: transparent;
+    color: var(--color-error);
+    border: 1.5px solid rgba(153,27,27,0.3);
+  }
+
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 390px;
+    background: var(--color-surface);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    display: flex; align-items: stretch; z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px 0 10px; gap: 3px; cursor: pointer;
+  }
+  .nav-icon { font-size: 22px; color: var(--color-muted); }
+  .nav-icon.active { color: var(--color-primary); }
+  .nav-label { font-size: 11px; font-weight: 500; color: var(--color-muted); }
+  .nav-label.active { color: var(--color-primary); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="hub-header">
+  <div class="back-btn">←</div>
+  <div class="hub-header-text">
+    <div class="hub-header-title">Task Detail</div>
+    <div class="hub-header-subtitle">Weekly Chores</div>
+  </div>
+  <div class="header-action">✏️</div>
+</div>
+
+<div class="main-content">
+
+  <div class="task-card">
+
+    <!-- Urgency strip -->
+    <div class="urgency-strip">
+      <div class="urgency-strip-icon">🚨</div>
+      <div class="urgency-strip-label">Critical — Urgent</div>
+    </div>
+
+    <!-- Task header -->
+    <div class="task-header">
+      <div class="task-title">Fix the leaking pipe under kitchen sink</div>
+      <div class="task-badges">
+        <div class="badge badge-critical">🔴 Critical</div>
+        <div class="badge badge-status-inprogress">⚙️ In Progress</div>
+        <div class="badge badge-subhub">Repairs</div>
+      </div>
+    </div>
+
+    <!-- Fields -->
+    <div class="task-fields">
+
+      <div class="field-row">
+        <div class="field-icon">📝</div>
+        <div class="field-body">
+          <div class="field-label">Description</div>
+          <div class="field-value">There's a slow drip from the joint under the sink. Need to call a plumber or try replacing the washer ourselves first.</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-icon">👤</div>
+        <div class="field-body">
+          <div class="field-label">Assigned to</div>
+          <div class="field-value">
+            <div class="assignee-chip">
+              <div class="assignee-avatar">D</div>
+              <div class="assignee-name">Dan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-icon">📅</div>
+        <div class="field-body">
+          <div class="field-label">Due date</div>
+          <div class="field-value" style="color: #DC2626; font-weight: 600;">March 30, 2026 · Overdue</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-icon">📋</div>
+        <div class="field-body">
+          <div class="field-label">Notes</div>
+          <div class="field-value">Tried tightening by hand — didn't help. Probably needs a new rubber washer (size 3/4"). Local hardware store has them.</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-icon">🏠</div>
+        <div class="field-body">
+          <div class="field-label">Sub-Hub</div>
+          <div class="field-value">Repairs</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="action-section">
+    <button class="btn btn-primary">✓ Mark as Done</button>
+    <button class="btn btn-secondary">✏️ Edit Task</button>
+    <button class="btn btn-danger">🗑️ Delete Task</button>
+  </div>
+
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item">
+    <div class="nav-icon">🛒</div>
+    <div class="nav-label">Shopping</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon active">✅</div>
+    <div class="nav-label active">Tasks</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">🎟️</div>
+    <div class="nav-label">Vouchers</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">📅</div>
+    <div class="nav-label">Reservations</div>
+  </div>
+</div>
+
+</body>
+</html>

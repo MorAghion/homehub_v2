@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-burgundy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>HomeHub — Dashboard</title>
+<style>
+  :root, .theme-burgundy {
+    --color-primary: #630606;
+    --color-background: #F5F2E7;
+    --color-surface: #FFFFFF;
+    --color-muted: #8E806A;
+    --color-error: #991B1B;
+    --color-success: #065F46;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--color-background);
+    color: #1a1a1a;
+    width: 390px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Attention Banner */
+  .attention-banner {
+    background: #FEF3C7;
+    border-bottom: 1px solid #D97706;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    z-index: 20;
+  }
+  .attention-banner-icon { font-size: 18px; flex-shrink: 0; }
+  .attention-banner-text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: #92400E;
+  }
+  .attention-banner-arrow { color: #D97706; font-size: 16px; }
+
+  /* App header */
+  .app-header {
+    background: var(--color-primary);
+    padding: 16px 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-header-left { display: flex; align-items: center; gap: 10px; }
+  .app-logo-sm {
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .app-logo-sm svg { width: 20px; height: 20px; }
+  .app-header-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+  }
+  .app-header-subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+  }
+  .header-avatar {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+  }
+
+  /* Main content */
+  .main-content {
+    flex: 1;
+    padding: 20px 16px;
+    padding-bottom: 80px;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  /* Hub grid — 2 columns */
+  .hub-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Hub card */
+  .hub-card {
+    background: var(--color-surface);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .hub-card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.10); }
+
+  .hub-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .hub-icon {
+    width: 40px; height: 40px;
+    background: rgba(99,6,6,0.08);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-primary);
+    font-size: 20px;
+  }
+  .hub-badge {
+    background: var(--color-error);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 9999px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+  }
+
+  .hub-card-bottom {}
+  .hub-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+  .hub-card-subtitle {
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-top: 2px;
+  }
+
+  /* Bottom nav */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 390px;
+    background: var(--color-surface);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: stretch;
+    z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0 10px;
+    gap: 3px;
+    cursor: pointer;
+    position: relative;
+  }
+  .nav-icon {
+    font-size: 22px;
+    color: var(--color-muted);
+    position: relative;
+  }
+  .nav-icon.active { color: var(--color-primary); }
+  .nav-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+  .nav-label.active { color: var(--color-primary); font-weight: 600; }
+  .nav-badge {
+    position: absolute;
+    top: -4px; right: -8px;
+    background: var(--color-error);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: 9999px;
+    min-width: 16px;
+    height: 16px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Attention Banner -->
+<div class="attention-banner">
+  <div class="attention-banner-icon">⚠️</div>
+  <div class="attention-banner-text">2 items need your attention</div>
+  <div class="attention-banner-arrow">→</div>
+</div>
+
+<!-- App header -->
+<div class="app-header">
+  <div class="app-header-left">
+    <div class="app-logo-sm">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 2L2 7.5v10h6v-5h4v5h6v-10L10 2z" fill="white"/>
+      </svg>
+    </div>
+    <div>
+      <div class="app-header-title">HomeHub</div>
+      <div class="app-header-subtitle">Smith Family</div>
+    </div>
+  </div>
+  <div class="header-avatar">S</div>
+</div>
+
+<!-- Main content -->
+<div class="main-content">
+  <div class="section-label">Your Hubs</div>
+
+  <div class="hub-grid">
+
+    <!-- Shopping Hub -->
+    <div class="hub-card">
+      <div class="hub-card-top">
+        <div class="hub-icon">🛒</div>
+      </div>
+      <div class="hub-card-bottom">
+        <div class="hub-card-title">Shopping &amp; Gear</div>
+        <div class="hub-card-subtitle">4 lists</div>
+      </div>
+    </div>
+
+    <!-- Tasks Hub -->
+    <div class="hub-card">
+      <div class="hub-card-top">
+        <div class="hub-icon">✅</div>
+        <div class="hub-badge">2</div>
+      </div>
+      <div class="hub-card-bottom">
+        <div class="hub-card-title">Home Tasks</div>
+        <div class="hub-card-subtitle">2 urgent</div>
+      </div>
+    </div>
+
+    <!-- Vouchers Hub -->
+    <div class="hub-card">
+      <div class="hub-card-top">
+        <div class="hub-icon">🎟️</div>
+      </div>
+      <div class="hub-card-bottom">
+        <div class="hub-card-title">Vouchers</div>
+        <div class="hub-card-subtitle">3 cards</div>
+      </div>
+    </div>
+
+    <!-- Reservations Hub -->
+    <div class="hub-card">
+      <div class="hub-card-top">
+        <div class="hub-icon">📅</div>
+      </div>
+      <div class="hub-card-bottom">
+        <div class="hub-card-title">Reservations</div>
+        <div class="hub-card-subtitle">1 upcoming</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item">
+    <div class="nav-icon active">🛒</div>
+    <div class="nav-label active">Shopping</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon" style="position:relative">
+      ✅
+      <div class="nav-badge">2</div>
+    </div>
+    <div class="nav-label">Tasks</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">🎟️</div>
+    <div class="nav-label">Vouchers</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon">📅</div>
+    <div class="nav-label">Reservations</div>
+  </div>
+</div>
+
+</body>
+</html>
