@@ -49,7 +49,7 @@ Only non-sensitive UI state is permitted in localStorage:
 | Key | Value | Purpose |
 |-----|-------|---------|
 | `i18next` | `"en"` / `"he"` | Language preference |
-| `theme` | `"burgundy"` / `"mint"` | Theme preference |
+| `homehub-theme` | `"burgundy"` / `"mint"` | Theme preference |
 | `homehub-pending-invite` | 8-char invite code | Temporary: stored before email confirmation, removed immediately after `join_household_via_invite()` succeeds |
 
 **Rule:** The pending invite code is the only transient token-like value permitted in localStorage. It is not a secret (it is user-typed), but agents must ensure it is removed from localStorage as soon as the join flow completes — whether success or error.
@@ -281,12 +281,63 @@ WHERE invite_code = $1
 
 ### Rate limiting
 
-**Rule:** 5 consecutive failed invite code attempts from the same user must trigger a 15-minute lockout. Implement this at the Edge Function or database function level — not just in the UI. The lockout prevents brute-force guessing of invite codes.
+**Rule:** 5 consecutive failed invite code attempts from the same user must trigger a 15-minute lockout. Implement this at the database function level inside `join_household_via_invite()` — not just in the UI. The lockout prevents brute-force guessing of invite codes.
 
-Implementation checklist:
-- Track failed attempts per `user_id` (or IP if unauthenticated) with a timestamp
-- On the 5th failure within the lockout window, return an error and block further attempts for 15 minutes
-- Reset the counter on a successful join
+#### Persistence mechanism: `invite_attempt_log`
+
+Failed attempts are tracked in a dedicated table:
+
+```sql
+invite_attempt_log (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id      UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  attempted_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+)
+```
+
+Enable RLS on `invite_attempt_log`:
+```sql
+ALTER TABLE invite_attempt_log ENABLE ROW LEVEL SECURITY;
+
+-- Users can only see and insert their own attempts
+CREATE POLICY "user_scoped_attempts" ON invite_attempt_log
+  FOR ALL
+  USING (user_id = auth.uid())
+  WITH CHECK (user_id = auth.uid());
+```
+
+#### How `join_household_via_invite()` enforces the lockout
+
+At the start of `join_household_via_invite($invite_code TEXT)`, before any other validation, the function checks the attempt count:
+
+```sql
+-- Check for lockout (5 failures within the last 15 minutes)
+IF (
+  SELECT COUNT(*) FROM invite_attempt_log
+  WHERE user_id = auth.uid()
+    AND attempted_at > NOW() - INTERVAL '15 minutes'
+) >= 5 THEN
+  RAISE EXCEPTION 'rate_limited: too many failed attempts, try again in 15 minutes';
+END IF;
+```
+
+On a **failed** validation (bad code, expired, already used), the function inserts a row:
+
+```sql
+INSERT INTO invite_attempt_log (user_id, attempted_at)
+VALUES (auth.uid(), NOW());
+```
+
+On a **successful** join, the function deletes the caller's recent attempt rows (counter reset):
+
+```sql
+DELETE FROM invite_attempt_log
+WHERE user_id = auth.uid();
+```
+
+#### 15-minute window definition
+
+The lockout window is a rolling 15-minute window. Once 5 failed attempts exist with `attempted_at > NOW() - INTERVAL '15 minutes'`, all further calls are rejected until the oldest of those rows ages out of the window. There is no separate "locked until" timestamp — the window is computed dynamically from the log rows.
 
 ### RLS on `household_invites`
 
@@ -440,3 +491,69 @@ Users are signed out only when:
 3. A member's account is deleted
 
 There is no other sign-out trigger. The app never signs a user out due to inactivity, JWT age, or background state.
+
+### Household deletion force sign-out
+
+When the household owner deletes the household, all connected member sessions must be invalidated immediately. Because Supabase does not support server-side JWT revocation for other users' sessions, this is implemented via Supabase Realtime.
+
+#### Mechanism
+
+**Step 1 — Broadcast on deletion:**
+The household deletion flow (DB trigger or Edge Function called during deletion) broadcasts a `HOUSEHOLD_DELETED` event on the channel `household:{id}:members`:
+
+```typescript
+// Called by the delete-household Edge Function after the DELETE completes
+await supabase
+  .channel(`household:${householdId}:members`)
+  .send({
+    type: "broadcast",
+    event: "HOUSEHOLD_DELETED",
+    payload: { household_id: householdId },
+  });
+```
+
+**Step 2 — All connected clients sign out:**
+Every client subscribes to this channel on app mount. On receiving the event, the client calls `supabase.auth.signOut()` and displays the message:
+
+> "Your household was deleted by the owner."
+
+```typescript
+// Subscribe on mount (all authenticated users)
+const channel = supabase
+  .channel(`household:${householdId}:members`)
+  .on("broadcast", { event: "HOUSEHOLD_DELETED" }, async () => {
+    await supabase.auth.signOut();
+    // Navigate to auth screen with message
+    navigate("/auth", { state: { message: "Your household was deleted by the owner." } });
+  })
+  .subscribe();
+
+// Unsubscribe on unmount
+return () => { supabase.removeChannel(channel); };
+```
+
+**Step 3 — Offline clients detect deletion on next session restore:**
+Clients that were not connected at the time of deletion detect the deleted household on their next app open. During session restore, the app queries the household:
+
+```typescript
+const { data: profile } = await supabase
+  .from("user_profiles")
+  .select("household_id")
+  .eq("id", user.id)
+  .single();
+
+if (!profile?.household_id) {
+  // Household was deleted — sign out with message
+  await supabase.auth.signOut();
+  navigate("/auth", { state: { message: "Your household was deleted by the owner." } });
+}
+```
+
+#### Sequence summary
+
+| Client state | Detection method | Action |
+|--------------|-----------------|--------|
+| Connected (online) | `HOUSEHOLD_DELETED` Realtime broadcast | `signOut()` + show message |
+| Offline / background | Session restore query finds no household | `signOut()` + show message |
+
+**Rule:** Every code path that initialises the authenticated session must include the household existence check from Step 3. This is the safety net for clients that missed the Realtime broadcast.
