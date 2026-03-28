@@ -1,0 +1,18 @@
+{
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "confirm": "Confirm",
+  "close": "Close",
+  "back": "Back",
+  "loading": "Loading…",
+  "error": "Something went wrong. Please try again.",
+  "saveError": "Failed to save. Please try again.",
+  "deleteError": "Failed to delete. Please try again.",
+  "nav": {
+    "shopping": "Shopping",
+    "tasks": "Tasks",
+    "vouchers": "Vouchers",
+    "reservations": "Reservations"
+  }
+}

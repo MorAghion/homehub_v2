@@ -1,0 +1,18 @@
+{
+  "cancel": "ביטול",
+  "save": "שמור",
+  "delete": "מחק",
+  "confirm": "אשר",
+  "close": "סגור",
+  "back": "חזור",
+  "loading": "טוען…",
+  "error": "משהו השתבש. נסה שוב.",
+  "saveError": "שמירה נכשלה. נסה שוב.",
+  "deleteError": "מחיקה נכשלה. נסה שוב.",
+  "nav": {
+    "shopping": "קניות",
+    "tasks": "משימות",
+    "vouchers": "קופונים",
+    "reservations": "הזמנות"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "title": "הגדרות",
+  "sections": {
+    "appearance": "מראה",
+    "integrations": "חיבורים",
+    "household": "משק בית",
+    "account": "חשבון",
+    "dangerZone": "אזור סכנה"
+  },
+  "theme": {
+    "label": "ערכת נושא",
+    "burgundy": "בורדו",
+    "mint": "מנטה",
+    "sublabel": "{{active}} (פעיל)"
+  },
+  "language": {
+    "label": "שפה",
+    "english": "English",
+    "hebrew": "עברית",
+    "sublabelEn": "אנגלית",
+    "sublabelHe": "עברית"
+  },
+  "gmail": {
+    "label": "חיבור Gmail",
+    "connected": "מחובר",
+    "notConnected": "לא מחובר",
+    "connect": "חבר Gmail",
+    "disconnect": "נתק",
+    "connectedAs": "{{email}}"
+  },
+  "invite": {
+    "label": "הזמן שותף",
+    "sublabel": "צור קוד הזמנה",
+    "ownerOnly": "רק בעל הבית יכול להזמין שותפים",
+    "generated": "קוד נוצר — שתף אותו עם השותף שלך",
+    "yourCode": "קוד ההזמנה שלך",
+    "copy": "העתק קוד",
+    "copied": "הועתק!",
+    "expiresIn": "פג תוקף בעוד {{hours}} שעות ו-{{minutes}} דקות",
+    "expiresLessThanHour": "פג תוקף בעוד {{minutes}} דקות",
+    "generate": "צור קוד"
+  },
+  "householdInfo": {
+    "label": "חברי משק הבית",
+    "owner": "בעל בית",
+    "member": "חבר"
+  },
+  "signOut": {
+    "label": "התנתק"
+  },
+  "deleteAccount": {
+    "label": "מחק את החשבון שלי",
+    "sublabel": "הסר את חשבונך לצמיתות",
+    "title": "מחיקת חשבון",
+    "confirmTypePlaceholder": "הקלד DELETE לאישור",
+    "confirmWord": "DELETE",
+    "memberWarning": "החשבון ונתונים אישיים יימחקו לצמיתות. נתוני משק הבית (רשימות קניות, משימות) יישארו.",
+    "ownerWithMembersPrompt": "בחר בעל בית חדש לפני מחיקת חשבונך",
+    "selectNewOwner": "בחר בעל בית חדש",
+    "ownerTransferred": "הבעלות הועברה. החשבון שלך יימחק עכשיו.",
+    "soloOwnerWarning": "פעולה זו תמחק לצמיתות את חשבונך וכל נתוני משק הבית כולל רשימות קניות, משימות, קופונים, הזמנות וחשבונות.",
+    "deletingAccount": "מוחק חשבון…"
+  },
+  "deleteHousehold": {
+    "label": "מחק את משק הבית",
+    "sublabel": "מחק את כל הנתונים לכל החברים",
+    "title": "מחיקת משק בית",
+    "ownerOnly": "רק בעל הבית יכול למחוק את משק הבית",
+    "warning1": "פעולה זו תמחק לצמיתות את כל נתוני משק הבית: רשימות קניות, משימות, קופונים, הזמנות, חשבונות וכל התמונות שהועלו.",
+    "warning2": "כל החברים יתנתקו מיידית ללא הודעה מוקדמת.",
+    "warning3": "לא ניתן לבטל פעולה זו.",
+    "confirmTypePlaceholder": "הקלד DELETE לאישור",
+    "confirmWord": "DELETE",
+    "deletingHousehold": "מוחק את משק הבית…"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Settings",
+  "sections": {
+    "appearance": "Appearance",
+    "integrations": "Integrations",
+    "household": "Household",
+    "account": "Account",
+    "dangerZone": "Danger Zone"
+  },
+  "theme": {
+    "label": "Theme",
+    "burgundy": "Burgundy",
+    "mint": "Mint",
+    "sublabel": "{{active}} (active)"
+  },
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "hebrew": "עברית",
+    "sublabelEn": "English",
+    "sublabelHe": "Hebrew"
+  },
+  "gmail": {
+    "label": "Gmail Connection",
+    "connected": "Connected",
+    "notConnected": "Not Connected",
+    "connect": "Connect Gmail",
+    "disconnect": "Disconnect",
+    "connectedAs": "{{email}}"
+  },
+  "invite": {
+    "label": "Invite Partner",
+    "sublabel": "Generate an invite code",
+    "ownerOnly": "Only the household owner can invite partners",
+    "generated": "Code generated — share it with your partner",
+    "yourCode": "Your Invite Code",
+    "copy": "Copy Code",
+    "copied": "Copied!",
+    "expiresIn": "Expires in {{hours}}h {{minutes}}m",
+    "expiresLessThanHour": "Expires in {{minutes}}m",
+    "generate": "Generate Code"
+  },
+  "householdInfo": {
+    "label": "Household Members",
+    "owner": "Owner",
+    "member": "Member"
+  },
+  "signOut": {
+    "label": "Sign Out"
+  },
+  "deleteAccount": {
+    "label": "Delete My Account",
+    "sublabel": "Permanently remove your account",
+    "title": "Delete Account",
+    "confirmTypePlaceholder": "Type DELETE to confirm",
+    "confirmWord": "DELETE",
+    "memberWarning": "Your account and personal data will be permanently deleted. Household data (shopping lists, tasks) will remain.",
+    "ownerWithMembersPrompt": "Choose a new owner before deleting your account",
+    "selectNewOwner": "Select new owner",
+    "ownerTransferred": "Ownership transferred. Your account will now be deleted.",
+    "soloOwnerWarning": "This will permanently delete your account and all household data including shopping lists, tasks, vouchers, reservations, and bills.",
+    "deletingAccount": "Deleting account…"
+  },
+  "deleteHousehold": {
+    "label": "Delete Household",
+    "sublabel": "Wipe all data for all members",
+    "title": "Delete Household",
+    "ownerOnly": "Only the household owner can delete the household",
+    "warning1": "This will permanently delete all household data: shopping lists, tasks, vouchers, reservations, bills, and all uploaded images.",
+    "warning2": "All members will be signed out immediately with no prior notice.",
+    "warning3": "This action cannot be undone.",
+    "confirmTypePlaceholder": "Type DELETE to confirm",
+    "confirmWord": "DELETE",
+    "deletingHousehold": "Deleting household…"
+  }
+}
