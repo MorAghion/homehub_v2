@@ -289,6 +289,8 @@ flowchart TD
 
 All Edge Functions run in the Supabase Deno runtime. They are invoked via `supabase.functions.invoke(name, { body })` from the client, or by pg_cron (server-side).
 
+> **Response envelope:** All Edge Function responses follow the `{ success, data/error }` envelope defined in BACKEND.md §7. The examples below show the full wrapped format. On success: `{ "success": true, "data": { ... } }`. On error: `{ "success": false, "error": { "code": "...", "message": "..." } }`. The BACKEND.md §1.x entries are the authoritative contracts — refer there for full error response tables.
+
 ---
 
 ### 5.1 `gmail-auth`
@@ -308,15 +310,22 @@ All Edge Functions run in the Supabase Deno runtime. They are invoked via `supab
 **Output (success):**
 ```json
 {
-  "connected": true,
-  "email": "string"          // Gmail address that was authorized
+  "success": true,
+  "data": {
+    "connected": true,
+    "email": "string"        // Gmail address that was authorized
+  }
 }
 ```
 
 **Output (error):**
 ```json
 {
-  "error": "string"
+  "success": false,
+  "error": {
+    "code": "google_token_exchange_failed",
+    "message": "string"
+  }
 }
 ```
 
@@ -337,7 +346,10 @@ All Edge Functions run in the Supabase Deno runtime. They are invoked via `supab
 **Output (success):**
 ```json
 {
-  "disconnected": true
+  "success": true,
+  "data": {
+    "disconnected": true
+  }
 }
 ```
 
@@ -365,23 +377,29 @@ When invoked from client, `user_id` is derived from JWT.
 **Output (initial mode — returns vendors for review):**
 ```json
 {
-  "vendors": [
-    {
-      "vendor_name": "string",
-      "sender_email": "string",
-      "sample_subjects": ["string"],
-      "email_count": 42
-    }
-  ]
+  "success": true,
+  "data": {
+    "vendors": [
+      {
+        "vendor_name": "string",
+        "sender_email": "string",
+        "sample_subjects": ["string"],
+        "email_count": 42
+      }
+    ]
+  }
 }
 ```
 
 **Output (incremental mode — processes and imports):**
 ```json
 {
-  "imported": 3,
-  "skipped_duplicates": 1,
-  "errors": []
+  "success": true,
+  "data": {
+    "imported": 3,
+    "skipped_duplicates": 1,
+    "errors": []
+  }
 }
 ```
 
@@ -413,19 +431,25 @@ When invoked from client, `user_id` is derived from JWT.
 **Output (success):**
 ```json
 {
-  "bill_id": "uuid",
-  "amount": 320.00,
-  "due_date": "2026-04-15",
-  "billing_period": "2026-03",
-  "pdf_path": "household_id/bills/filename.pdf"
+  "success": true,
+  "data": {
+    "bill_id": "uuid",
+    "amount": 320.00,
+    "due_date": "2026-04-15",
+    "billing_period": "2026-03",
+    "pdf_path": "household_id/bills/filename.pdf"
+  }
 }
 ```
 
 **Output (skip — duplicate):**
 ```json
 {
-  "skipped": true,
-  "reason": "duplicate: vendor_name+billing_period already exists"
+  "success": true,
+  "data": {
+    "skipped": true,
+    "reason": "duplicate: vendor_name+billing_period already exists"
+  }
 }
 ```
 
@@ -454,16 +478,22 @@ When invoked from client, `user_id` is derived from JWT.
 **Output (success):**
 ```json
 {
-  "access_token": "string",
-  "expires_at": "ISO8601 timestamp"
+  "success": true,
+  "data": {
+    "access_token": "string",
+    "expires_at": "ISO8601 timestamp"
+  }
 }
 ```
 
 **Output (error):**
 ```json
 {
-  "error": "token_missing" | "refresh_failed",
-  "message": "string"
+  "success": false,
+  "error": {
+    "code": "token_missing",
+    "message": "string"
+  }
 }
 ```
 
@@ -542,9 +572,12 @@ flowchart LR
 
 | Branch | Purpose | Deploy target |
 |--------|---------|---------------|
-| `feature/*` | Developer work | None (CI checks only) |
+| `feature/*` | Human developer work | None (CI checks only) |
+| `polecat/<name>` | Agent (polecat) work — automatically named by the Gas Town harness | None (CI checks only) |
 | `master` | Integration branch — all PRs merge here | Vercel preview per PR |
 | `main` | Production source of truth | Vercel production (auto) |
+
+> **Branch naming note:** Human developer branches use `feature/*`. Agent (polecat) branches are automatically named `polecat/<polecat-name>` by the Gas Town harness. Both branch types target `master` for integration. Do not use `agent/{task-id}` for polecats — the harness controls branch naming.
 
 **CI pipeline steps (in order):**
 
@@ -638,15 +671,68 @@ USING (list_id IN (
 
 | Channel name | Table(s) subscribed | Who subscribes | Payload filter |
 |---|---|---|---|
-| `household:{household_id}:shopping` | `shopping_lists`, `shopping_items` | All household members on Shopping Hub | `household_id=eq.{id}` |
-| `household:{household_id}:tasks` | `task_lists`, `tasks` | All household members on Tasks Hub | `household_id=eq.{id}` |
+| `household:{household_id}:shopping` | `shopping_lists` | All household members on Shopping Hub | `household_id=eq.{id}` |
+| `household:{household_id}:tasks` | `task_lists` | All household members on Tasks Hub | `household_id=eq.{id}` |
 | `household:{household_id}:vouchers` | `vouchers` | All household members on Vouchers Hub | `household_id=eq.{id}` |
 | `household:{household_id}:reservations` | `reservations` | All household members on Reservations Hub | `household_id=eq.{id}` |
 | `household:{household_id}:bills` | `bills` | All household members on Bills Hub | `household_id=eq.{id}` |
-| `household:{household_id}:members` | `user_profiles` | All household members (for join/leave notifications) | `household_id=eq.{id}` |
+| `household:{household_id}:members` | `user_profiles` | All household members (for join/leave/deletion events) | `household_id=eq.{id}` |
 
 - Channels are created on component mount and torn down on unmount.
 - All channels require a valid JWT; Supabase validates household membership via RLS before allowing subscription.
+
+### Child Table Realtime Filter Approach (S-06)
+
+`shopping_items` and `tasks` do not carry a `household_id` column — they inherit household membership through their parent tables (`shopping_lists`, `task_lists`). Supabase Realtime filter parameters only work on the subscribed table's own columns; filtering child tables by `household_id` silently fails.
+
+**Chosen approach — Option A (subscribe to parent table, re-fetch children):**
+
+Subscribe to `shopping_lists` changes (and `task_lists` changes). On any change event, re-fetch the child items for the affected list. Do **not** subscribe to `shopping_items` or `tasks` directly with a `household_id` filter.
+
+```typescript
+// Correct: subscribe to shopping_lists, then re-fetch items
+supabase
+  .channel(`household:${householdId}:shopping`)
+  .on("postgres_changes", { event: "*", schema: "public", table: "shopping_lists",
+      filter: `household_id=eq.${householdId}` },
+    () => refetchItemsForAllLists())
+  .subscribe();
+
+// Incorrect — do NOT do this (household_id column does not exist on shopping_items):
+// .on("postgres_changes", { table: "shopping_items", filter: `household_id=eq.${householdId}` })
+```
+
+This adds one extra read per parent table mutation, but avoids silent filtering failures.
+
+### Household Deletion — Force Sign-Out (G-02 / SEC-01)
+
+Supabase does not support server-side JWT revocation for other users' active sessions. Force sign-out on household deletion is implemented via Realtime + offline detection:
+
+**For connected clients (online):**
+1. When the owner deletes the household, a Supabase DB trigger (or the deletion Edge Function) broadcasts a `HOUSEHOLD_DELETED` event on the `household:{id}:members` channel.
+2. All connected clients subscribe to this channel on app mount. On receiving a `HOUSEHOLD_DELETED` broadcast (or a `DELETE` payload on `user_profiles`), they call `supabase.auth.signOut()` immediately and display: _"Your household was deleted by the owner."_
+
+```typescript
+// Subscribed on app mount — all clients
+supabase
+  .channel(`household:${householdId}:members`)
+  .on("broadcast", { event: "HOUSEHOLD_DELETED" }, () => {
+    supabase.auth.signOut();
+    showMessage("Your household was deleted by the owner.");
+  })
+  .on("postgres_changes", { event: "DELETE", schema: "public", table: "user_profiles",
+      filter: `household_id=eq.${householdId}` },
+    () => {
+      supabase.auth.signOut();
+      showMessage("Your household was deleted by the owner.");
+    })
+  .subscribe();
+```
+
+**For offline clients (not currently connected):**
+- On next app open / session restore, the client queries `households` for the user's `household_id`.
+- If the query returns no row (household was deleted), call `supabase.auth.signOut()` and display the same message.
+- This is implemented in the app's session-restore logic (e.g., in the `onAuthStateChange` handler or app root `useEffect`).
 
 ---
 

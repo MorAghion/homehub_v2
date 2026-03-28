@@ -24,6 +24,8 @@ All functions accept `POST`. Authentication is verified via the `Authorization: 
 
 **Auth required:** User JWT
 
+**Rate limit:** Maximum 5 calls per `user_id` per 10 minutes. Implement via a DB counter or Supabase rate-limiting header. Exceeding this limit returns `429 Too Many Requests`.
+
 **HTTP method:** `POST`
 
 **Request body:**
@@ -258,6 +260,7 @@ All functions accept `POST`. Authentication is verified via the `Authorization: 
 
 **Side effects:**
 - Calls Gmail API `users.messages.get` + `users.messages.attachments.get`
+- Validates attachment MIME type from the Gmail API response: if `parts[].mimeType` is not `application/pdf`, skip the attachment and return `extraction_failed`. Do not trust the content-disposition filename — only the declared MIME type from the Gmail API is checked.
 - Attempts PDF text extraction (pdfjs); falls back to Tesseract OCR for image-based PDFs
 - Applies vendor-specific regex from `bill-vendors.json` to extract fields
 - `storage.upload()` to `household_id/bills/` bucket
@@ -312,6 +315,49 @@ All functions accept `POST`. Authentication is verified via the `Authorization: 
 - Reads `push_subscriptions` for all household members with notifications enabled
 - Respects `quiet_hours` per user — skips delivery if current time is in quiet window
 - Calls Web Push API per subscribed device endpoint
+
+---
+
+### 1.7 `transfer-household-ownership`
+
+**Purpose:** Atomically transfer household ownership from the current owner to a nominated member. Updates `user_profiles.role` for both the departing owner (set to `'member'`) and the incoming owner (set to `'owner'`). After transfer, optionally deletes the departing user's account.
+
+**Triggered by:** Client — Settings → "Transfer Ownership" (owner only)
+
+**Auth required:** User JWT. Caller must be the current household owner — enforced inside the function by checking `user_profiles.role = 'owner'` for `auth.uid()`.
+
+**HTTP method:** `POST`
+
+**Request body:**
+```json
+{
+  "new_owner_id": "uuid"   // user_id of the member to promote to owner
+}
+```
+
+**Success response** `200`:
+```json
+{
+  "success": true,
+  "data": {
+    "transferred": true,
+    "new_owner_id": "uuid"
+  }
+}
+```
+
+**Error responses:**
+| HTTP | `error.code` | Meaning |
+|------|-------------|---------|
+| `403` | `not_owner` | Caller is not the current household owner |
+| `400` | `invalid_new_owner` | `new_owner_id` is not a member of the caller's household |
+| `500` | `db_update_failed` | Could not atomically update the two `user_profiles` rows |
+
+**Side effects:**
+- Atomically executes two `UPDATE user_profiles SET role = ...` statements in a single transaction:
+  1. Caller's row: `role = 'member'`
+  2. `new_owner_id` row: `role = 'owner'`
+- Does **not** delete the departing owner's account — account deletion is a separate user action.
 
 ---
 
@@ -621,7 +667,7 @@ SELECT cron.schedule(
 
 - `bill-scanner` processes users independently. A failure for one user (e.g., expired token) does not abort processing for other users — errors are collected and returned in the `errors` array.
 - pg_cron logs the HTTP response status in `cron.job_run_details`. Non-2xx responses are recorded as failures.
-- On `token_refresh_failed`: the user's Gmail is marked as needing reconnection. The Settings UI reflects this state by checking `oauth_tokens.is_valid` (or absence of a token row).
+- On `token_refresh_failed`: the user's Gmail token row is deleted. The Settings UI reflects the disconnected state by checking for the **absence** of a token row in `oauth_tokens` (no row = disconnected / needs reconnect). There is no `is_valid` flag — presence of the row means connected, absence means not connected.
 - Inspect failed runs:
 
 ```sql
@@ -726,8 +772,14 @@ All Edge Functions must include CORS headers to allow invocation from the Vercel
 
 ```typescript
 // supabase/functions/_shared/cors.ts
+//
+// Production: set ALLOWED_ORIGIN env var to "https://our-homehub.vercel.app"
+// in Supabase Dashboard → Edge Functions → Secrets.
+// The wildcard "*" is for local development only — never deploy to production with wildcard.
+const allowedOrigin = Deno.env.get("ALLOWED_ORIGIN") ?? "*";
+
 export const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",   // restrict to production domain in prod
+  "Access-Control-Allow-Origin": allowedOrigin,
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
@@ -739,3 +791,5 @@ if (req.method === "OPTIONS") {
 ```
 
 Every response — success and error — must include `corsHeaders`.
+
+**`ALLOWED_ORIGIN` must be set in production.** See ENV.md §8 for configuration details. An unset `ALLOWED_ORIGIN` falls back to `*`, which is acceptable for local `supabase functions serve` but must not reach the production environment.

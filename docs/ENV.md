@@ -16,6 +16,7 @@
 5. [GitHub Actions (CI)](#5-github-actions-ci)
 6. [Local Development Setup (.env.local)](#6-local-development-setup-envlocal)
 7. [Variable Matrix by Environment](#7-variable-matrix-by-environment)
+8. [Database-Level Settings for pg_cron](#8-database-level-settings-for-pg_cron)
 
 ---
 
@@ -29,6 +30,8 @@ Supabase provides authentication, PostgreSQL database, storage, Edge Functions, 
 | `VITE_SUPABASE_ANON_KEY` | Supabase | The public anon key for the Supabase JS client. Safe to expose in the browser because all data access is controlled by Row Level Security (RLS) policies. | Dashboard → Project Settings → API → **Project API keys → anon / public** | Required | Frontend, CI |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase | Elevated key used by Edge Functions to bypass RLS when performing server-side operations (e.g., writing OAuth tokens on behalf of a user, running scheduled bill scans). **Never expose to the browser.** | Dashboard → Project Settings → API → **Project API keys → service_role / secret** | Required | Backend (Edge Functions) |
 | `SUPABASE_JWT_SECRET` | Supabase | Used by Edge Functions to verify that incoming JWTs were signed by this Supabase project, ensuring requests are authentic. | Dashboard → Project Settings → API → **JWT Settings → JWT Secret** | Required | Backend (Edge Functions) |
+
+> **Auto-injected Edge Function variables:** `SUPABASE_URL` (without `VITE_` prefix) and `SUPABASE_SERVICE_ROLE_KEY` are **automatically injected** into every Edge Function's runtime environment by Supabase — no manual configuration is required. Agents must use `Deno.env.get("SUPABASE_URL")` inside Edge Functions. Do **not** create a `VITE_SUPABASE_URL` variant for Edge Functions, and do **not** add these to the Supabase Dashboard secrets — they are already present.
 
 ---
 
@@ -130,6 +133,10 @@ SUPABASE_JWT_SECRET=
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
+# CORS allowed origin — leave unset or set to * for local development.
+# In production, set to: https://our-homehub.vercel.app
+# ALLOWED_ORIGIN=*
+
 # Phase 1.3 only — generate with: npx web-push generate-vapid-keys
 # VAPID_PRIVATE_KEY=
 # VAPID_SUBJECT=mailto:your@email.com
@@ -148,13 +155,52 @@ supabase functions serve --env-file supabase/.env.local
 |----------|--------------------|------------------------|---------------------|----------------|
 | `VITE_SUPABASE_URL` | ✓ | — | ✓ | ✓ |
 | `VITE_SUPABASE_ANON_KEY` | ✓ | — | ✓ | ✓ |
-| `SUPABASE_SERVICE_ROLE_KEY` | — | ✓ | — | — |
+| `SUPABASE_SERVICE_ROLE_KEY` | — | ✓ (auto-injected) | — | — |
 | `SUPABASE_JWT_SECRET` | — | ✓ | — | — |
 | `VITE_GOOGLE_CLIENT_ID` | ✓ | — | ✓ | ✓ |
 | `GOOGLE_CLIENT_ID` | — | ✓ | — | — |
 | `GOOGLE_CLIENT_SECRET` | — | ✓ | — | — |
+| `ALLOWED_ORIGIN` | — | ✓ (production) | — | — |
 | `VITE_VAPID_PUBLIC_KEY` | ✓ (Phase 1.3) | — | ✓ (Phase 1.3) | ✓ (Phase 1.3) |
 | `VAPID_PRIVATE_KEY` | — | ✓ (Phase 1.3) | — | — |
 | `VAPID_SUBJECT` | — | ✓ (Phase 1.3) | — | — |
 
-**Legend:** ✓ = required in this environment | — = not used here | (Phase 1.3) = not needed until that phase ships
+**Legend:** ✓ = required in this environment | — = not used here | (auto-injected) = Supabase provides this automatically | (production) = not needed locally but required in production | (Phase 1.3) = not needed until that phase ships
+
+---
+
+## 8. Database-Level Settings for pg_cron
+
+pg_cron invokes Edge Functions via `net.http_post`, which requires the Edge Function base URL and the service role key. These are stored as PostgreSQL database-level configuration values — they are **not** environment variables in the usual sense, and are **not** set in `.env.local` or the Supabase Edge Functions secrets panel.
+
+Set these values in the **Supabase Dashboard → Project Settings → Database → Configuration** (or via `ALTER DATABASE` in a migration):
+
+| Setting key | Value | Purpose |
+|-------------|-------|---------|
+| `app.settings.supabase_functions_url` | `https://<project-ref>.supabase.co/functions/v1` | Base URL for Edge Function invocations from pg_cron |
+| `app.settings.service_role_key` | Same value as `SUPABASE_SERVICE_ROLE_KEY` | Auth header for pg_cron → Edge Function calls |
+
+**How to set them (one-time migration or SQL editor):**
+```sql
+ALTER DATABASE postgres SET "app.settings.supabase_functions_url" = 'https://<project-ref>.supabase.co/functions/v1';
+ALTER DATABASE postgres SET "app.settings.service_role_key" = '<your-service-role-key>';
+```
+
+These are read at runtime via `current_setting('app.settings.supabase_functions_url')` inside pg_cron job SQL — see BACKEND.md §5.1 for the full cron job definition.
+
+**Security:** These settings are visible to any Postgres role with access to `current_setting()`. They do not appear in source code or the Edge Functions environment — they live entirely in the database layer.
+
+---
+
+## 9. Edge Function Secrets (Supabase Dashboard)
+
+Edge Function-specific secrets that are **not** auto-injected must be set in **Supabase Dashboard → Edge Functions → Secrets**:
+
+| Secret | Description |
+|--------|-------------|
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID (same value as `VITE_GOOGLE_CLIENT_ID`) |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret — never expose to browser |
+| `SUPABASE_JWT_SECRET` | For JWT verification inside Edge Functions |
+| `ALLOWED_ORIGIN` | CORS allowed origin in production: `https://our-homehub.vercel.app` |
+| `VAPID_PRIVATE_KEY` | Web Push signing key (Phase 1.3) |
+| `VAPID_SUBJECT` | Web Push sender identity (Phase 1.3) |
