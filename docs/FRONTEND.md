@@ -31,7 +31,8 @@ src/
 │   │   ├── vouchers.json
 │   │   ├── reservations.json
 │   │   ├── auth.json
-│   │   └── settings.json
+│   │   ├── settings.json
+│   │   └── bills.json        ← Phase 1.1 stub (see §8)
 │   └── he/
 │       └── (mirror of en/)
 └── types/               # Shared TypeScript types and interfaces
@@ -353,6 +354,179 @@ interface ConfirmDialogProps {
 
 ---
 
+### 2.9 AttentionBanner
+
+Persistent banner shown at the top of the landing (home) screen when urgent items exist. Navigates to the Urgent Tasks view on tap.
+
+**File:** `src/components/shared/AttentionBanner.tsx`
+
+**Props interface:**
+```typescript
+interface AttentionBannerProps {
+  count: number;      // total urgent items (tasks + overdue bills)
+  onTap: () => void;  // navigate to Urgent Tasks view
+}
+```
+
+**Behaviour:**
+- Renders only when `count > 0`. Auto-hides (returns `null`) when `count` drops to 0.
+- Arrow icon must be RTL-aware — use a CSS-flipped SVG (`transform: scaleX(-1)` under `dir="rtl"`), **never** a hardcoded `→` character (see UI_DESIGN_SYSTEM §5.3).
+- Tapping anywhere on the banner calls `onTap`.
+
+**Usage example:**
+```tsx
+<AttentionBanner
+  count={urgentCount}
+  onTap={() => navigate('/tasks/urgent')}
+/>
+```
+
+---
+
+### 2.10 BottomNavBar
+
+Fixed bottom navigation bar. Always visible on all routes. See UI_DESIGN_SYSTEM §2.6 for the full visual spec.
+
+**File:** `src/components/shared/BottomNavBar.tsx`
+
+**Props interface:**
+```typescript
+interface BottomNavBarProps {
+  urgentCount: number;  // badge count on Tasks tab (tasks + overdue bills)
+}
+```
+
+**Behaviour:**
+- Derives the active tab from `useLocation()` — no active-tab prop needed.
+- Renders four tabs in order: Shopping, Tasks, Vouchers, Reservations (see UI_DESIGN_SYSTEM §2.6 tab table).
+- Displays a count badge on the Tasks tab when `urgentCount > 0`.
+- Tab order is visually reversed in RTL via `direction: rtl` CSS on the nav — **do not** reverse the DOM order (see UI_DESIGN_SYSTEM §5.3).
+- Uses `pb-safe` for iOS safe-area bottom inset (see UI_DESIGN_SYSTEM §3.4).
+
+**Usage example:**
+```tsx
+<BottomNavBar urgentCount={totalUrgentCount} />
+```
+
+---
+
+### 2.11 Toast and ToastProvider
+
+Global toast notification system. UI_DESIGN_SYSTEM §4.3 specifies visual style (variants, positioning, animation).
+
+#### Toast.tsx
+
+Single toast element. Not used directly — rendered by `ToastProvider`.
+
+**File:** `src/components/shared/Toast.tsx`
+
+**Props interface:**
+```typescript
+interface ToastProps {
+  message: string;
+  type: 'error' | 'success' | 'info';
+  onDismiss: () => void;
+}
+```
+
+#### ToastProvider.tsx + useToast
+
+**File:** `src/components/shared/ToastProvider.tsx`
+
+Wraps the app (mounted once in the root layout). Maintains a queue of active toasts. Exposes `useToast` hook for all components.
+
+**`useToast` API:**
+```typescript
+interface ToastAPI {
+  show: (message: string, type: 'error' | 'success' | 'info') => void;
+}
+export function useToast(): ToastAPI;
+```
+
+**Behaviour:**
+- `success` and `info` toasts auto-dismiss after **4 seconds**.
+- `error` toasts are **sticky** — user must dismiss manually.
+- Queue support: multiple `show()` calls stack toasts (display one at a time or stacked — implementation choice, but order must be preserved).
+- Slide-in animation from bottom; RTL: `translateX(-100%)` on enter, LTR: `translateX(100%)` (see UI_DESIGN_SYSTEM animation table).
+
+**Usage example:**
+```tsx
+// In root layout:
+<ToastProvider>
+  <App />
+</ToastProvider>
+
+// In any component:
+const { show } = useToast();
+// ...
+show(t('common:saveError'), 'error');
+show(t('common:saved'), 'success');
+```
+
+---
+
+### 2.12 SmartBubbles (Shopping Hub)
+
+Suggestion bubbles shown when a Shopping Sub-Hub has an empty Master List. This component is **shopping-specific** — it lives in `components/hubs/shopping/`, not in `components/shared/`.
+
+**File:** `src/components/hubs/shopping/SmartBubbles.tsx`
+
+**Props interface:**
+```typescript
+interface SmartBubblesProps {
+  contexts: string[];                        // matched context keys (e.g. ['grocery', 'pharma'])
+  onSelectContext: (ctx: string) => void;    // inject starter pack for the selected context
+  onDismiss: () => void;                     // user chose "Keep Empty" — hide bubbles
+}
+```
+
+**Behaviour (per PRD §7.3):**
+- Shown when the Master List is empty and at least one context matches the Sub-Hub name.
+- One bubble per matched context + one "Keep Empty" bubble (dashed border style).
+- **Smart Merge:** selecting multiple bubbles sequentially merges starter packs without duplicates — call `onSelectContext` for each selected context; deduplication is handled in the hook.
+- **Keep Empty:** calls `onDismiss()`. Bubbles are hidden until the Sub-Hub is reopened with an empty list.
+- **Bubble labels** must use translation keys from the `shopping` namespace (see §6 i18n note below):
+  `shopping:context.grocery`, `shopping:context.camping`, `shopping:context.travelAbroad`, etc.
+
+**Bubble style (CSS variables, not hardcoded hex):**
+```
+bg-[--color-bubble-bg]/10  border border-[--color-primary]  text-[--color-primary]  rounded-full
+```
+Keep Empty bubble adds `border-dashed`.
+
+**i18n context keys (shopping namespace):**
+
+| Context key | `shopping:context.*` key | EN label | HE translation needed |
+|-------------|--------------------------|----------|-----------------------|
+| `grocery` | `shopping:context.grocery` | Grocery | קניות |
+| `camping` | `shopping:context.camping` | Camping | קמפינג |
+| `travelAbroad` | `shopping:context.travelAbroad` | Travel Abroad | נסיעה לחו"ל |
+| `pharma` | `shopping:context.pharma` | Pharma | בית מרקחת |
+| `baby` | `shopping:context.baby` | Baby | תינוק |
+| `cleaning` | `shopping:context.cleaning` | Cleaning | ניקיון |
+| *(all 12 contexts from PRD §7.2)* | | | |
+
+**i18n category keys (shopping namespace):**
+
+List-Category names appear in Master List section headers, the re-categorize popup, and Smart Category nudge. All must go through `t()`:
+
+| Category | `shopping:category.*` key |
+|----------|--------------------------|
+| Dairy | `shopping:category.dairy` |
+| Meat | `shopping:category.meat` |
+| Fish | `shopping:category.fish` |
+| Pantry | `shopping:category.pantry` |
+| Vegetables | `shopping:category.vegetables` |
+| Fruit | `shopping:category.fruit` |
+| Cleaning | `shopping:category.cleaning` |
+| Pharma & Hygiene | `shopping:category.pharmaHygiene` |
+| Documents & Money | `shopping:category.documentsAndMoney` |
+| Other | `shopping:category.other` |
+
+Hebrew translations for all 10 categories must be added to `locales/he/shopping.json`.
+
+---
+
 ## 3. Hub-Specific vs Shared — The Decision Rule
 
 > **A component is shared if two or more hubs need it, OR if it is part of the global chrome (nav, FAB, modals).**
@@ -485,7 +659,7 @@ One custom hook per data domain. Each hook is the **only** place that imports `s
 | `useVouchers` | `hooks/useVouchers.ts` | Vouchers in one Sub-Hub | `vouchers`, `isLoading`, `createVoucher`, `updateVoucher`, `deleteVoucher` |
 | `useReservationLists` | `hooks/useReservationLists.ts` | Sub-Hub list for Reservations hub | `lists`, `isLoading`, `createList`, `renameList`, `deleteList` |
 | `useReservations` | `hooks/useReservations.ts` | Reservations in one Sub-Hub | `reservations`, `isLoading`, `createReservation`, `updateReservation`, `deleteReservation` |
-| `useUrgentItems` | `hooks/useUrgentItems.ts` | Aggregate urgent tasks + overdue bills | `urgentTasks`, `overdueBills`, `totalCount`, `isLoading` |
+| `useUrgentItems` | `hooks/useUrgentItems.ts` | Aggregate urgent tasks + overdue bills | `urgentTasks`, `overdueBills`, `totalCount`, `isLoading` | **Note:** `overdueBills` returns `[]` until Phase 1.1 ships. The hook must catch the `relation-not-found` Supabase error on the `bills` query and return an empty array — the `bills` table does not exist in Phase 1. |
 | `useTheme` | `hooks/useTheme.ts` | Theme selection + `localStorage` persistence | `theme`, `setTheme` (`'burgundy' \| 'mint'`) |
 | `useLanguage` | `hooks/useLanguage.ts` | Language selection, `<html dir>` sync | `language`, `setLanguage` (`'en' \| 'he'`) |
 
@@ -539,6 +713,7 @@ Namespace assignment by component location:
 | `pages/SettingsPage.tsx` | `settings` |
 | `components/shared/*` | `common` |
 | Auth components | `auth` |
+| `pages/BillsPage.tsx` (Phase 1.1) | `bills` |
 
 ### 6.3 No Hardcoded Strings Rule
 
@@ -634,6 +809,59 @@ Mock Supabase at the module level (`vi.mock('../lib/supabase')`), not inside ind
 ### 7.6 i18n in Tests
 
 Use a real (but minimal) `i18next` instance in tests — do not use key-echo mocks that return the key as the translation. This prevents false positives where a component renders a raw key instead of a translated string.
+
+---
+
+## 8. Phase 1.1 — Bills Hub (Placeholder)
+
+> **Status:** Not yet built. This section provides stubs so the Phase 1.1 frontend agent has a starting point. Expand as Phase 1.1 design firms up.
+
+### 8.1 Hook Stubs
+
+| Hook | File | Data domain | Key exports (planned) |
+|------|------|-------------|----------------------|
+| `useBills` | `hooks/useBills.ts` | Bills in one Bills Sub-Hub | `bills`, `isLoading`, `error`, `markAsPaid` |
+
+### 8.2 Component Stubs
+
+| Component | File | Notes |
+|-----------|------|-------|
+| `BillCard` | `src/components/hubs/bills/BillCard.tsx` | Displays vendor name, amount, due date, status badge; "Pay Now" shortcut |
+
+### 8.3 i18n Namespace — `bills`
+
+**File:** `locales/en/bills.json` (stub — expand when Phase 1.1 design is finalised)
+
+Expected keys:
+```json
+{
+  "billCard": {
+    "vendor": "Vendor",
+    "amount": "Amount",
+    "dueDate": "Due Date",
+    "status": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "overdue": "Overdue"
+    },
+    "payNow": "Pay Now",
+    "markAsPaid": "Mark as Paid",
+    "history": "History"
+  },
+  "vendorApproval": {
+    "title": "New Vendor Detected",
+    "approve": "Approve",
+    "reject": "Reject",
+    "disclaimer": "Approving allows HomeHub to extract bill data from emails from this sender."
+  },
+  "errors": {
+    "fetchFailed": "Couldn't load bills. Please try again.",
+    "markPaidFailed": "Couldn't mark bill as paid. Please try again."
+  }
+}
+```
+
+Mirror all keys in `locales/he/bills.json`.
 
 ---
 
