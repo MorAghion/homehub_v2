@@ -2,6 +2,7 @@
 .claude/
 .runtime/
 node_modules/
+dist/
 
 # E2E test artifacts
 playwright-report/

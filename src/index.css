@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+/* ── Theme: Burgundy (default) ─────────────────────────────────────────── */
+:root,
+[data-theme="burgundy"] {
+  --color-primary: #7c2d3e;
+  --color-primary-light: #9d3b52;
+  --color-accent: #f5e6d3;
+}
+
+/* ── Theme: Mint ─────────────────────────────────────────────────────────── */
+[data-theme="mint"] {
+  --color-primary: #2d7c5a;
+  --color-primary-light: #3b9d72;
+  --color-accent: #d3f5e6;
+}
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* ── Logical properties — NEVER use ml/mr/pl/pr ─────────────────────────── */
+/* All spacing uses ms-/me-/ps-/pe- so RTL works automatically. */
