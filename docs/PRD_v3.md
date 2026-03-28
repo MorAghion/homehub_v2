@@ -149,6 +149,7 @@ user_profiles (
   id UUID PRIMARY KEY → auth.users(id),
   household_id UUID → households(id),
   display_name TEXT,
+  role TEXT NOT NULL DEFAULT 'owner' CHECK (role IN ('owner', 'member')),
   created_at, updated_at TIMESTAMPTZ
 )
 
@@ -258,6 +259,7 @@ oauth_tokens (
   refresh_token TEXT,               -- encrypted
   expires_at TIMESTAMPTZ,
   scopes TEXT[],
+  last_scanned_at TIMESTAMPTZ,      -- updated after each successful bill scan run
   created_at, updated_at TIMESTAMPTZ
 )
 ```
@@ -651,7 +653,7 @@ When creating a new Sub-Hub in either Vouchers or Reservations, the user selects
 | **Theme** | Toggle between Burgundy and Mint color themes. Switches instantly, persisted in localStorage |
 | **Language** | Toggle between English and Hebrew. Switches app `dir` attribute and all translations without reload |
 | **Gmail Connection** | Connect / disconnect Gmail OAuth. Shows connection status (Connected / Not Connected) |
-| **Invite Partner** | Generates an 8-char invite code valid for 7 days. User shares it via any channel |
+| **Invite Partner** | Generates an 8-char invite code valid for 24 hours. User shares it via any channel |
 | **Household Info** | Shows household name, list of members with display names |
 | **Sign Out** | Signs out current user. Supabase session is cleared |
 
@@ -762,7 +764,7 @@ Both household members can connect their own Gmail independently. The bill scann
 
 ---
 
-## 15. Testing Strategy
+## 16. Testing Strategy
 
 ### 15.1 Test Layers
 
@@ -792,7 +794,7 @@ GitHub Actions pipeline on every PR:
 
 ---
 
-## 16. Coding Conventions
+## 17. Coding Conventions
 
 ```
 - All components: functional with hooks (no class components)
@@ -808,7 +810,7 @@ GitHub Actions pipeline on every PR:
 
 ---
 
-## 17. Current Implementation Status
+## 18. Current Implementation Status
 
 All Phase 0 and Phase 1.0 work is **complete and deployed to production** at `our-homehub.vercel.app`.
 
@@ -828,7 +830,7 @@ All Phase 0 and Phase 1.0 work is **complete and deployed to production** at `ou
 
 ---
 
-## 18. Roadmap — Phase 1 Features (Not Yet Built)
+## 19. Roadmap — Phase 1 Features (Not Yet Built)
 
 ### 18.1 Bill Management (Phase 1.1)
 **Depends on:** Gmail OAuth (complete)
@@ -909,14 +911,24 @@ bills (
   status         TEXT,       -- pending | paid (overdue is derived: due_date < today AND status = pending)
   source_email_id TEXT,      -- Gmail message ID, for deduplication
   imported_by    UUID,       -- which household member's Gmail
-  created_at, updated_at TIMESTAMPTZ
+  created_at, updated_at TIMESTAMPTZ,
+  UNIQUE (household_id, vendor_name, billing_period)  -- deduplication: one bill per vendor per period per household
 )
 ```
 
-**`oauth_tokens` table addition:**
+**`user_approved_vendors` table (persists vendor approval state from Review Screen):**
 ```sql
-last_scanned_at TIMESTAMPTZ  -- updated after each successful scan run
+user_approved_vendors (
+  id           UUID PRIMARY KEY,
+  user_id      UUID → auth.users(id) ON DELETE CASCADE,
+  vendor_name  TEXT NOT NULL,
+  sender_email TEXT NOT NULL,
+  approved     BOOLEAN DEFAULT true,  -- false = user explicitly rejected
+  created_at   TIMESTAMPTZ,
+  UNIQUE (user_id, vendor_name)
+)
 ```
+RLS: user-scoped (`user_id = auth.uid()`). The `bill-scanner` incremental mode filters against this table to know which vendors to process automatically without re-prompting the Review Screen.
 
 **Acceptance criteria:**
 - 90-day scan identifies all vendors from the supported vendor database
@@ -1008,7 +1020,7 @@ Horizontal scrollable carousel pinned at top of Home Hub showing:
 
 ---
 
-## 19. Risk Register
+## 20. Risk Register
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
@@ -1019,7 +1031,7 @@ Horizontal scrollable carousel pinned at top of Home Hub showing:
 
 ---
 
-## 20. Phase 1 Dependency Map
+## 21. Phase 1 Dependency Map
 
 ```
 Gmail OAuth (0.3) ✅ ──────────────────→ 1.1 Bill Management
@@ -1038,7 +1050,7 @@ SEQUENTIAL (must wait):
 
 ---
 
-## 21. Phase 1 Milestone Summary
+## 22. Phase 1 Milestone Summary
 
 | Milestone | Tasks | Gate |
 |-----------|-------|------|
@@ -1050,7 +1062,7 @@ SEQUENTIAL (must wait):
 
 ---
 
-## 22. How to Update This PRD
+## 23. How to Update This PRD
 
 This document is the **single source of truth** for all agents. Code follows the PRD — never the other way around.
 
@@ -1092,6 +1104,12 @@ This document is the **single source of truth** for all agents. Code follows the
 | 2026-03-17 | 5.2, 5.3 | Shopping items and tasks have no ownership tracking — shared household data, never deleted on member removal |
 | 2026-03-17 | 6.7 | Added Account Deletion flows (Member / Owner with members / solo Owner) |
 | 2026-03-17 | 5 | Fixed invite code expiry: 7 days → 24 hours |
+| 2026-03-28 | 5.1 | Added `role` column to `user_profiles` schema (owner/member) |
+| 2026-03-28 | 5.5 | Added `last_scanned_at` to `oauth_tokens` schema |
+| 2026-03-28 | 11.1 | Fixed invite code expiry in Settings table: 7 days → 24 hours |
+| 2026-03-28 | 19.1 | Added `user_approved_vendors` table schema for bill vendor review persistence |
+| 2026-03-28 | 19.1 | Added UNIQUE constraint to `bills` table (household_id, vendor_name, billing_period) |
+| 2026-03-28 | All | Renumbered duplicate §15 (Testing Strategy → §16), shifted §16–§22 → §17–§23 |
 
 ---
 
