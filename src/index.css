@@ -6,6 +6,11 @@
   --color-primary: #7c2d3e;
   --color-primary-light: #9d3b52;
   --color-accent: #f5e6d3;
+  --color-background: #f9f5f2;
+  --color-surface: #ffffff;
+  --color-muted: #6b7280;
+  --color-error: #dc2626;
+  --color-success: #16a34a;
 }
 
 /* ── Theme: Mint ─────────────────────────────────────────────────────────── */
@@ -13,6 +18,11 @@
   --color-primary: #2d7c5a;
   --color-primary-light: #3b9d72;
   --color-accent: #d3f5e6;
+  --color-background: #f2f9f6;
+  --color-surface: #ffffff;
+  --color-muted: #6b7280;
+  --color-error: #dc2626;
+  --color-success: #16a34a;
 }
 
 /* ── Base ────────────────────────────────────────────────────────────────── */
