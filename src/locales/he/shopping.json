@@ -1,0 +1,71 @@
+{
+  "hub": {
+    "title": "קניות",
+    "subtitle": "{{count}} רשימה",
+    "subtitle_plural": "{{count}} רשימות",
+    "newSubHub": "רשימה חדשה",
+    "emptyState": "אין רשימות קניות עדיין. לחץ + ליצירת רשימה.",
+    "editMode": "עריכה",
+    "doneEditing": "סיום"
+  },
+  "subHub": {
+    "items": "{{count}} פריט",
+    "items_plural": "{{count}} פריטים",
+    "createTitle": "רשימת קניות חדשה",
+    "createLabel": "שם הרשימה",
+    "createPlaceholder": "למשל: סופר, טיול קמפינג",
+    "editTitle": "עריכת רשימה",
+    "deleteConfirm": "מחיקת רשימה",
+    "deleteMessage": "פעולה זו תמחק לצמיתות את הרשימה וכל הפריטים שלה."
+  },
+  "tabs": {
+    "master": "רשימה ראשית",
+    "active": "קניות"
+  },
+  "masterList": {
+    "emptyState": "הוסף פריטים לרשימה הראשית",
+    "addPlaceholder": "הוסף פריט…",
+    "addItemLabel": "הוסף פריט",
+    "duplicateError": "הפריט כבר ברשימה",
+    "editMode": "עריכה",
+    "doneEditing": "סיום",
+    "deleteSelected": "מחק נבחרים",
+    "selected": "{{count}} נבחרו",
+    "selectAll": "בחר הכל",
+    "clearAll": "נקה הכל"
+  },
+  "activeList": {
+    "emptyState": "אין פריטים עדיין. הוסף פריטים לרשימה הראשית קודם.",
+    "clearSession": "סיים קנייה",
+    "clearConfirm": "לסיים את הקנייה?",
+    "clearMessage": "פעולה זו תסמן {{count}} פריטים כלא-נקנו.",
+    "allChecked": "הכל נרכש! קנייה מוצלחת."
+  },
+  "bubbles": {
+    "title": "להתחיל עם תבנית?",
+    "keepEmpty": "רשימה ריקה",
+    "keepEmptyHint": "התחל עם רשימה ריקה"
+  },
+  "category": {
+    "dairy": "מוצרי חלב",
+    "meat": "בשר",
+    "fish": "דגים",
+    "pantry": "מזווה",
+    "vegetables": "ירקות",
+    "fruit": "פירות",
+    "cleaning": "ניקיון",
+    "pharma_hygiene": "תרופות והיגיינה",
+    "documents_money": "מסמכים וכסף",
+    "other": "אחר"
+  },
+  "categoryLearning": {
+    "nudgeTitle": "לאיזו קטגוריה?",
+    "nudgeMessage": "עזור לנו לסווג את \"{{item}}\" עבור הבית שלך.",
+    "save": "שמור",
+    "tagIconLabel": "סווג פריט זה"
+  },
+  "editMode": {
+    "selected": "{{count}} נבחרו",
+    "deleteSelected": "מחק נבחרים"
+  }
+}

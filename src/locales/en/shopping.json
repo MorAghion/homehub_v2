@@ -1,0 +1,71 @@
+{
+  "hub": {
+    "title": "Shopping",
+    "subtitle": "{{count}} list",
+    "subtitle_plural": "{{count}} lists",
+    "newSubHub": "New list",
+    "emptyState": "No shopping lists yet. Tap + to create one.",
+    "editMode": "Edit",
+    "doneEditing": "Done"
+  },
+  "subHub": {
+    "items": "{{count}} item",
+    "items_plural": "{{count}} items",
+    "createTitle": "New Shopping List",
+    "createLabel": "List name",
+    "createPlaceholder": "e.g. Supermarket, Camping Trip",
+    "editTitle": "Edit List",
+    "deleteConfirm": "Delete List",
+    "deleteMessage": "This will permanently delete this list and all its items."
+  },
+  "tabs": {
+    "master": "Master List",
+    "active": "Shopping"
+  },
+  "masterList": {
+    "emptyState": "Add items to your master list",
+    "addPlaceholder": "Add item…",
+    "addItemLabel": "Add item",
+    "duplicateError": "Item already in list",
+    "editMode": "Edit",
+    "doneEditing": "Done",
+    "deleteSelected": "Delete Selected",
+    "selected": "{{count}} selected",
+    "selectAll": "Select All",
+    "clearAll": "Clear All"
+  },
+  "activeList": {
+    "emptyState": "No items yet. Add items to your Master List first.",
+    "clearSession": "Clear session",
+    "clearConfirm": "End shopping session?",
+    "clearMessage": "This will uncheck all {{count}} items.",
+    "allChecked": "All done! Great shopping trip."
+  },
+  "bubbles": {
+    "title": "Start with a template?",
+    "keepEmpty": "Keep Empty",
+    "keepEmptyHint": "Start with a blank list"
+  },
+  "category": {
+    "dairy": "Dairy",
+    "meat": "Meat",
+    "fish": "Fish",
+    "pantry": "Pantry",
+    "vegetables": "Vegetables",
+    "fruit": "Fruit",
+    "cleaning": "Cleaning",
+    "pharma_hygiene": "Pharma & Hygiene",
+    "documents_money": "Documents & Money",
+    "other": "Other"
+  },
+  "categoryLearning": {
+    "nudgeTitle": "Which category?",
+    "nudgeMessage": "Help us categorize \"{{item}}\" for your household.",
+    "save": "Save",
+    "tagIconLabel": "Categorize this item"
+  },
+  "editMode": {
+    "selected": "{{count}} selected",
+    "deleteSelected": "Delete Selected"
+  }
+}

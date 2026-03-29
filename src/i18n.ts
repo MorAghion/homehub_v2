@@ -6,11 +6,13 @@ import enSettings from './locales/en/settings.json'
 import enAuth from './locales/en/auth.json'
 import enTasks from './locales/en/tasks.json'
 import enHome from './locales/en/home.json'
+import enShopping from './locales/en/shopping.json'
 import heCommon from './locales/he/common.json'
 import heSettings from './locales/he/settings.json'
 import heAuth from './locales/he/auth.json'
 import heTasks from './locales/he/tasks.json'
 import heHome from './locales/he/home.json'
+import heShopping from './locales/he/shopping.json'
 
 void i18n.use(initReactI18next).init({
   lng: localStorage.getItem('homehub-language') ?? 'en',
@@ -22,6 +24,7 @@ void i18n.use(initReactI18next).init({
       auth: enAuth,
       tasks: enTasks,
       home: enHome,
+      shopping: enShopping,
     },
     he: {
       common: heCommon,
@@ -29,9 +32,10 @@ void i18n.use(initReactI18next).init({
       auth: heAuth,
       tasks: heTasks,
       home: heHome,
+      shopping: heShopping,
     },
   },
-  ns: ['common', 'settings', 'auth', 'tasks', 'home'],
+  ns: ['common', 'settings', 'auth', 'tasks', 'home', 'shopping'],
   defaultNS: 'common',
   interpolation: {
     escapeValue: false,
