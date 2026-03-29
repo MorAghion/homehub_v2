@@ -23,6 +23,7 @@ export default function App() {
       <Suspense fallback={null}>
         <Routes>
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/reset-password" element={<AuthPage />} />
           <Route
             path="/"
             element={
