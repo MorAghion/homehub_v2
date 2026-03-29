@@ -1,0 +1,45 @@
+# HomeHub v2 — CI workflow
+#
+# Runs typecheck, unit tests, and build on every push to master
+# and every push to polecat feature branches, and on PRs to master.
+
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - 'polecat/**'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  ci:
+    name: Typecheck / Test / Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test -- --run
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
