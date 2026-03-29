@@ -1,0 +1,51 @@
+{
+  "title": "קופונים",
+  "empty": "אין קופונים עדיין",
+  "emptySubHub": "אין קופונים בקבוצה זו",
+  "addVoucher": "הוסף קופון",
+  "editVoucher": "ערוך קופון",
+  "deleteVoucher": "מחק קופון",
+  "deleteConfirmTitle": "מחיקת קופון?",
+  "deleteConfirmMessage": "\"{{name}}\" יימחק לצמיתות.",
+  "codeCopied": "הקוד הועתק!",
+  "copyCode": "העתק קוד",
+  "noCode": "אין קוד",
+  "noExpiry": "ללא תפוגה",
+  "expired": "פג תוקף",
+  "expiryLabel": "תפוגה:",
+  "fields": {
+    "name": "שם",
+    "namePlaceholder": "לדוגמה: כרטיס מתנה זארה",
+    "code": "קוד / ברקוד",
+    "codePlaceholder": "הדבק קוד או סרוק תמונה",
+    "expiryDate": "תאריך תפוגה",
+    "value": "ערך",
+    "valuePlaceholder": "לדוגמה: ₪500",
+    "notes": "הערות",
+    "notesPlaceholder": "הערות אופציונליות",
+    "image": "תמונה"
+  },
+  "smartPaste": {
+    "detected": "זוהה קישור BuyMe — ממלא קוד אוטומטית…",
+    "failed": "לא ניתן לנתח את הקישור. אנא מלא ידנית."
+  },
+  "ocr": {
+    "scanning": "סורק תמונה לאיתור קוד…",
+    "found": "נמצא קוד — בדוק ושמור.",
+    "notFound": "לא זוהה קוד — מלא ידנית."
+  },
+  "subHub": {
+    "new": "קבוצה חדשה",
+    "namePlaceholder": "לדוגמה: כרטיסי BuyMe",
+    "deleteConfirmTitle": "מחיקת קבוצה?",
+    "deleteConfirmMessage": "\"{{name}}\" וכל הקופונים שלה יימחקו לצמיתות.",
+    "countLabel_one": "{{count}} קופון",
+    "countLabel_other": "{{count}} קופונים"
+  },
+  "editMode": {
+    "selectAll": "בחר הכל",
+    "deleteSelected": "מחק נבחרים",
+    "selectedCount_one": "{{count}} נבחר",
+    "selectedCount_other": "{{count}} נבחרו"
+  }
+}

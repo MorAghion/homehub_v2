@@ -1,0 +1,39 @@
+{
+  "title": "הזמנות",
+  "empty": "אין הזמנות עדיין",
+  "emptySubHub": "אין הזמנות בקבוצה זו",
+  "addReservation": "הוסף הזמנה",
+  "editReservation": "ערוך הזמנה",
+  "deleteReservation": "מחק הזמנה",
+  "deleteConfirmTitle": "מחיקת הזמנה?",
+  "deleteConfirmMessage": "\"{{name}}\" תימחק לצמיתות.",
+  "upcoming": "קרובה",
+  "past": "עברה",
+  "noDate": "ללא תאריך",
+  "fields": {
+    "name": "שם",
+    "namePlaceholder": "לדוגמה: ארוחת ערב במנטה ריי",
+    "date": "תאריך",
+    "partySize": "מספר סועדים",
+    "partySizePlaceholder": "מספר אנשים",
+    "notes": "הערות",
+    "notesPlaceholder": "הערות אופציונליות",
+    "image": "תמונה",
+    "smartPasteUrl": "קישור הזמנה",
+    "smartPasteUrlPlaceholder": "הדבק קישור הזמנה (אופציונלי)"
+  },
+  "subHub": {
+    "new": "קבוצה חדשה",
+    "namePlaceholder": "לדוגמה: מסעדות",
+    "deleteConfirmTitle": "מחיקת קבוצה?",
+    "deleteConfirmMessage": "\"{{name}}\" וכל ההזמנות שלה יימחקו לצמיתות.",
+    "countLabel_one": "{{count}} הזמנה",
+    "countLabel_other": "{{count}} הזמנות"
+  },
+  "editMode": {
+    "selectAll": "בחר הכל",
+    "deleteSelected": "מחק נבחרים",
+    "selectedCount_one": "{{count}} נבחר",
+    "selectedCount_other": "{{count}} נבחרו"
+  }
+}

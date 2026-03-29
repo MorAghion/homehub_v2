@@ -1,0 +1,51 @@
+{
+  "title": "Vouchers",
+  "empty": "No vouchers yet",
+  "emptySubHub": "No vouchers in this group",
+  "addVoucher": "Add Voucher",
+  "editVoucher": "Edit Voucher",
+  "deleteVoucher": "Delete Voucher",
+  "deleteConfirmTitle": "Delete Voucher?",
+  "deleteConfirmMessage": "\"{{name}}\" will be permanently deleted.",
+  "codeCopied": "Code copied!",
+  "copyCode": "Copy code",
+  "noCode": "No code",
+  "noExpiry": "No expiry",
+  "expired": "Expired",
+  "expiryLabel": "Exp:",
+  "fields": {
+    "name": "Name",
+    "namePlaceholder": "e.g. Zara Gift Card",
+    "code": "Code / Barcode",
+    "codePlaceholder": "Paste code or scan image",
+    "expiryDate": "Expiry Date",
+    "value": "Value",
+    "valuePlaceholder": "e.g. ₪500",
+    "notes": "Notes",
+    "notesPlaceholder": "Optional notes",
+    "image": "Image"
+  },
+  "smartPaste": {
+    "detected": "BuyMe link detected — filling code automatically…",
+    "failed": "Couldn't parse the link. Please fill in manually."
+  },
+  "ocr": {
+    "scanning": "Scanning image for code…",
+    "found": "Code found — review and save.",
+    "notFound": "No code detected — fill in manually."
+  },
+  "subHub": {
+    "new": "New Group",
+    "namePlaceholder": "e.g. BuyMe Cards",
+    "deleteConfirmTitle": "Delete Group?",
+    "deleteConfirmMessage": "\"{{name}}\" and all its vouchers will be permanently deleted.",
+    "countLabel_one": "{{count}} voucher",
+    "countLabel_other": "{{count}} vouchers"
+  },
+  "editMode": {
+    "selectAll": "Select all",
+    "deleteSelected": "Delete selected",
+    "selectedCount_one": "{{count}} selected",
+    "selectedCount_other": "{{count}} selected"
+  }
+}

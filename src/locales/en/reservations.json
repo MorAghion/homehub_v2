@@ -1,0 +1,39 @@
+{
+  "title": "Reservations",
+  "empty": "No reservations yet",
+  "emptySubHub": "No reservations in this group",
+  "addReservation": "Add Reservation",
+  "editReservation": "Edit Reservation",
+  "deleteReservation": "Delete Reservation",
+  "deleteConfirmTitle": "Delete Reservation?",
+  "deleteConfirmMessage": "\"{{name}}\" will be permanently deleted.",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "noDate": "No date",
+  "fields": {
+    "name": "Name",
+    "namePlaceholder": "e.g. Dinner at Manta Ray",
+    "date": "Date",
+    "partySize": "Party Size",
+    "partySizePlaceholder": "Number of people",
+    "notes": "Notes",
+    "notesPlaceholder": "Optional notes",
+    "image": "Image",
+    "smartPasteUrl": "Booking URL",
+    "smartPasteUrlPlaceholder": "Paste booking link (optional)"
+  },
+  "subHub": {
+    "new": "New Group",
+    "namePlaceholder": "e.g. Restaurants",
+    "deleteConfirmTitle": "Delete Group?",
+    "deleteConfirmMessage": "\"{{name}}\" and all its reservations will be permanently deleted.",
+    "countLabel_one": "{{count}} reservation",
+    "countLabel_other": "{{count}} reservations"
+  },
+  "editMode": {
+    "selectAll": "Select all",
+    "deleteSelected": "Delete selected",
+    "selectedCount_one": "{{count}} selected",
+    "selectedCount_other": "{{count}} selected"
+  }
+}
