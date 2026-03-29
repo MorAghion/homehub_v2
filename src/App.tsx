@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useSession } from './contexts/AuthContext'
+import { useUrgentTasks } from './hooks/useUrgentTasks'
+import BottomNav from './components/shared/BottomNav'
 
 const AuthPage = lazy(() => import('./pages/AuthPage'))
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -10,11 +12,18 @@ const TasksHubPage = lazy(() => import('./pages/TasksHubPage'))
 const VouchersHubPage = lazy(() => import('./pages/VouchersHubPage'))
 const ReservationsHubPage = lazy(() => import('./pages/ReservationsHubPage'))
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { session, isLoading } = useSession()
+function ProtectedLayout({ children }: { children: React.ReactNode }) {
+  const { session, isLoading, household } = useSession()
+  const urgent = useUrgentTasks(household?.id ?? null)
+
   if (isLoading) return null
   if (!session) return <Navigate to="/auth" replace />
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      <BottomNav urgentCount={urgent.totalCount} />
+    </>
+  )
 }
 
 export default function App() {
@@ -27,57 +36,81 @@ export default function App() {
           <Route
             path="/"
             element={
-              <ProtectedRoute>
+              <ProtectedLayout>
                 <HomePage />
-              </ProtectedRoute>
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path="/shopping"
+            element={
+              <ProtectedLayout>
+                <ShoppingHubPage />
+              </ProtectedLayout>
             }
           />
           <Route
             path="/shopping/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedLayout>
                 <ShoppingHubPage />
-              </ProtectedRoute>
+              </ProtectedLayout>
             }
           />
           <Route
             path="/tasks"
             element={
-              <ProtectedRoute>
+              <ProtectedLayout>
                 <TasksHubPage />
-              </ProtectedRoute>
+              </ProtectedLayout>
             }
           />
           <Route
             path="/tasks/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedLayout>
                 <TasksHubPage />
-              </ProtectedRoute>
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path="/vouchers"
+            element={
+              <ProtectedLayout>
+                <VouchersHubPage />
+              </ProtectedLayout>
             }
           />
           <Route
             path="/vouchers/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedLayout>
                 <VouchersHubPage />
-              </ProtectedRoute>
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path="/reservations"
+            element={
+              <ProtectedLayout>
+                <ReservationsHubPage />
+              </ProtectedLayout>
             }
           />
           <Route
             path="/reservations/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedLayout>
                 <ReservationsHubPage />
-              </ProtectedRoute>
+              </ProtectedLayout>
             }
           />
           <Route
             path="/settings"
             element={
-              <ProtectedRoute>
+              <ProtectedLayout>
                 <SettingsPage />
-              </ProtectedRoute>
+              </ProtectedLayout>
             }
           />
         </Routes>

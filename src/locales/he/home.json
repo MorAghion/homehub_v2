@@ -1,0 +1,17 @@
+{
+  "dashboard": {
+    "title": "בית",
+    "greeting": "שמחים לראות אותך!"
+  },
+  "attentionBanner": {
+    "message_one": "{{count}} פריט דורש תשומת לב",
+    "message_other": "{{count}} פריטים דורשים תשומת לב",
+    "cta": "צפה בדחוף"
+  },
+  "hubs": {
+    "shopping": "קניות",
+    "tasks": "משימות",
+    "vouchers": "קופונים",
+    "reservations": "הזמנות"
+  }
+}

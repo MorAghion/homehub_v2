@@ -11,6 +11,10 @@
   --color-muted: #6b7280;
   --color-error: #dc2626;
   --color-success: #16a34a;
+  --color-urgency-critical: #dc2626;
+  --color-urgency-high: #ea580c;
+  --color-urgency-medium: #ca8a04;
+  --color-urgency-low: #16a34a;
 }
 
 /* ── Theme: Mint ─────────────────────────────────────────────────────────── */
@@ -23,6 +27,10 @@
   --color-muted: #6b7280;
   --color-error: #dc2626;
   --color-success: #16a34a;
+  --color-urgency-critical: #dc2626;
+  --color-urgency-high: #ea580c;
+  --color-urgency-medium: #ca8a04;
+  --color-urgency-low: #16a34a;
 }
 
 /* ── Base ────────────────────────────────────────────────────────────────── */

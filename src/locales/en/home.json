@@ -1,0 +1,17 @@
+{
+  "dashboard": {
+    "title": "Home",
+    "greeting": "Good to see you!"
+  },
+  "attentionBanner": {
+    "message_one": "{{count}} item needs your attention",
+    "message_other": "{{count}} items need your attention",
+    "cta": "View Urgent"
+  },
+  "hubs": {
+    "shopping": "Shopping",
+    "tasks": "Tasks",
+    "vouchers": "Vouchers",
+    "reservations": "Reservations"
+  }
+}
