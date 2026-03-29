@@ -1,0 +1,57 @@
+{
+  "hub": {
+    "title": "שוברים",
+    "subtitle": "{{count}} אוספים",
+    "newSubHub": "אוסף חדש",
+    "emptyState": "אין אוספים עדיין. לחץ + ליצירת אוסף.",
+    "editMode": "עריכה",
+    "doneEditing": "סיום"
+  },
+  "list": {
+    "emptyState": "אין שוברים עדיין. לחץ + להוספה.",
+    "vouchers": "שובר {{count}}",
+    "vouchers_plural": "{{count}} שוברים",
+    "createTitle": "אוסף חדש",
+    "createLabel": "שם האוסף",
+    "createPlaceholder": "למשל: כרטיסי BuyMe",
+    "editTitle": "עריכת אוסף",
+    "deleteConfirm": "מחיקת אוסף",
+    "deleteMessage": "פעולה זו תמחק לצמיתות את האוסף וכל השוברים שבו."
+  },
+  "card": {
+    "copyCode": "העתק קוד",
+    "codeCopied": "הקוד הועתק!",
+    "noCode": "אין קוד",
+    "expiresIn": "פג תוקף בעוד {{days}} ימים",
+    "expiresLabel": "תוקף",
+    "expired": "פג תוקף",
+    "noExpiry": "ללא תאריך תפוגה",
+    "imageAlt": "תמונת שובר"
+  },
+  "modal": {
+    "createTitle": "שובר חדש",
+    "editTitle": "עריכת שובר",
+    "nameLabel": "שם",
+    "namePlaceholder": "למשל: כרטיס מתנה זארה",
+    "valueLabel": "ערך",
+    "valuePlaceholder": "למשל: ₪500",
+    "codeLabel": "קוד / ברקוד",
+    "codePlaceholder": "הדבק קוד או קישור BuyMe",
+    "expiryLabel": "תאריך תפוגה",
+    "notesLabel": "הערות",
+    "notesPlaceholder": "הערות אופציונליות…",
+    "imageLabel": "תמונה",
+    "imageUpload": "העלה תמונה",
+    "ocrRunning": "סורק תמונה לקוד…",
+    "ocrFound": "קוד חולץ מהתמונה",
+    "smartPasteDetected": "זוהה קישור BuyMe — השדות מולאו אוטומטית",
+    "saveCreate": "הוסף שובר",
+    "saveEdit": "שמור שינויים",
+    "deleteConfirm": "מחיקת שובר",
+    "deleteMessage": "האם אתה בטוח שברצונך למחוק שובר זה?"
+  },
+  "editMode": {
+    "selected": "{{count}} נבחרו",
+    "deleteSelected": "מחק נבחרים"
+  }
+}

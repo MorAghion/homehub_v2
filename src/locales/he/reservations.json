@@ -1,0 +1,56 @@
+{
+  "hub": {
+    "title": "הזמנות",
+    "subtitle": "{{count}} קבוצות",
+    "newSubHub": "קבוצה חדשה",
+    "emptyState": "אין קבוצות הזמנות עדיין. לחץ + ליצירה.",
+    "editMode": "עריכה",
+    "doneEditing": "סיום"
+  },
+  "list": {
+    "emptyState": "אין הזמנות עדיין. לחץ + להוספה.",
+    "reservations": "הזמנה {{count}}",
+    "reservations_plural": "{{count}} הזמנות",
+    "createTitle": "קבוצה חדשה",
+    "createLabel": "שם הקבוצה",
+    "createPlaceholder": "למשל: הזמנות מסעדות",
+    "editTitle": "עריכת קבוצה",
+    "deleteConfirm": "מחיקת קבוצה",
+    "deleteMessage": "פעולה זו תמחק לצמיתות את הקבוצה וכל ההזמנות שבה."
+  },
+  "card": {
+    "imageAlt": "תמונת הזמנה",
+    "partySize": "{{count}} אורחים",
+    "noDate": "אין תאריך",
+    "today": "היום",
+    "tomorrow": "מחר",
+    "dateLabel": "תאריך"
+  },
+  "modal": {
+    "createTitle": "הזמנה חדשה",
+    "editTitle": "עריכת הזמנה",
+    "nameLabel": "מסעדה / מקום",
+    "namePlaceholder": "למשל: מנטה ריי",
+    "dateLabel": "תאריך",
+    "timeLabel": "שעה",
+    "timePlaceholder": "למשל: 19:30",
+    "addressLabel": "כתובת",
+    "addressPlaceholder": "למשל: הרברט סמואל 1, תל אביב",
+    "partySizeLabel": "מספר סועדים",
+    "partySizePlaceholder": "מספר אורחים",
+    "notesLabel": "הערות",
+    "notesPlaceholder": "מספר אישור, בקשות מיוחדות…",
+    "imageLabel": "תמונה",
+    "imageUpload": "העלה תמונה",
+    "urlLabel": "קישור להזמנה",
+    "urlPlaceholder": "הדבק קישור הזמנה…",
+    "saveCreate": "הוסף הזמנה",
+    "saveEdit": "שמור שינויים",
+    "deleteConfirm": "מחיקת הזמנה",
+    "deleteMessage": "האם אתה בטוח שברצונך למחוק הזמנה זו?"
+  },
+  "editMode": {
+    "selected": "{{count}} נבחרו",
+    "deleteSelected": "מחק נבחרים"
+  }
+}

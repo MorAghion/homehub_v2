@@ -1,0 +1,56 @@
+{
+  "hub": {
+    "title": "Reservations",
+    "subtitle": "{{count}} sub-hubs",
+    "newSubHub": "New sub-hub",
+    "emptyState": "No reservation groups yet. Tap + to create one.",
+    "editMode": "Edit",
+    "doneEditing": "Done"
+  },
+  "list": {
+    "emptyState": "No reservations yet. Tap + to add one.",
+    "reservations": "{{count}} reservation",
+    "reservations_plural": "{{count}} reservations",
+    "createTitle": "New Group",
+    "createLabel": "Group name",
+    "createPlaceholder": "e.g. Restaurant Bookings",
+    "editTitle": "Edit Group",
+    "deleteConfirm": "Delete Group",
+    "deleteMessage": "This will permanently delete this group and all its reservations."
+  },
+  "card": {
+    "imageAlt": "Reservation image",
+    "partySize": "{{count}} guests",
+    "noDate": "No date set",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "dateLabel": "Date"
+  },
+  "modal": {
+    "createTitle": "New Reservation",
+    "editTitle": "Edit Reservation",
+    "nameLabel": "Restaurant / Venue",
+    "namePlaceholder": "e.g. Manta Ray",
+    "dateLabel": "Date",
+    "timeLabel": "Time",
+    "timePlaceholder": "e.g. 19:30",
+    "addressLabel": "Address",
+    "addressPlaceholder": "e.g. 1 Herbert Samuel, Tel Aviv",
+    "partySizeLabel": "Party size",
+    "partySizePlaceholder": "Number of guests",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Confirmation number, special requests…",
+    "imageLabel": "Image",
+    "imageUpload": "Upload image",
+    "urlLabel": "Booking URL",
+    "urlPlaceholder": "Paste booking link…",
+    "saveCreate": "Add Reservation",
+    "saveEdit": "Save Changes",
+    "deleteConfirm": "Delete Reservation",
+    "deleteMessage": "Are you sure you want to delete this reservation?"
+  },
+  "editMode": {
+    "selected": "{{count}} selected",
+    "deleteSelected": "Delete Selected"
+  }
+}

@@ -82,6 +82,14 @@ export default function App() {
             }
           />
           <Route
+            path="/vouchers"
+            element={
+              <ProtectedRoute>
+                <VouchersHubPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/vouchers/:id"
             element={
               <ProtectedLayout>
@@ -95,6 +103,14 @@ export default function App() {
               <ProtectedLayout>
                 <ReservationsHubPage />
               </ProtectedLayout>
+            }
+          />
+          <Route
+            path="/reservations"
+            element={
+              <ProtectedRoute>
+                <ReservationsHubPage />
+              </ProtectedRoute>
             }
           />
           <Route

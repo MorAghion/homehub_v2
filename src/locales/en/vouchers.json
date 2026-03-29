@@ -1,0 +1,57 @@
+{
+  "hub": {
+    "title": "Vouchers",
+    "subtitle": "{{count}} sub-hubs",
+    "newSubHub": "New sub-hub",
+    "emptyState": "No voucher collections yet. Tap + to create one.",
+    "editMode": "Edit",
+    "doneEditing": "Done"
+  },
+  "list": {
+    "emptyState": "No vouchers yet. Tap + to add one.",
+    "vouchers": "{{count}} voucher",
+    "vouchers_plural": "{{count}} vouchers",
+    "createTitle": "New Collection",
+    "createLabel": "Collection name",
+    "createPlaceholder": "e.g. BuyMe Cards",
+    "editTitle": "Edit Collection",
+    "deleteConfirm": "Delete Collection",
+    "deleteMessage": "This will permanently delete this collection and all its vouchers."
+  },
+  "card": {
+    "copyCode": "Copy code",
+    "codeCopied": "Code copied!",
+    "noCode": "No code",
+    "expiresIn": "Expires in {{days}} days",
+    "expiresLabel": "Expires",
+    "expired": "Expired",
+    "noExpiry": "No expiry",
+    "imageAlt": "Voucher image"
+  },
+  "modal": {
+    "createTitle": "New Voucher",
+    "editTitle": "Edit Voucher",
+    "nameLabel": "Name",
+    "namePlaceholder": "e.g. Zara Gift Card",
+    "valueLabel": "Value",
+    "valuePlaceholder": "e.g. ₪500",
+    "codeLabel": "Code / Barcode",
+    "codePlaceholder": "Paste code or BuyMe URL",
+    "expiryLabel": "Expiry Date",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Optional notes…",
+    "imageLabel": "Image",
+    "imageUpload": "Upload image",
+    "ocrRunning": "Scanning image for code…",
+    "ocrFound": "Code extracted from image",
+    "smartPasteDetected": "BuyMe link detected — fields auto-filled",
+    "saveCreate": "Add Voucher",
+    "saveEdit": "Save Changes",
+    "deleteConfirm": "Delete Voucher",
+    "deleteMessage": "Are you sure you want to delete this voucher?"
+  },
+  "editMode": {
+    "selected": "{{count}} selected",
+    "deleteSelected": "Delete Selected"
+  }
+}
