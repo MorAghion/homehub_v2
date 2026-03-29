@@ -5,10 +5,14 @@ import enCommon from './locales/en/common.json'
 import enSettings from './locales/en/settings.json'
 import enAuth from './locales/en/auth.json'
 import enTasks from './locales/en/tasks.json'
+import enVouchers from './locales/en/vouchers.json'
+import enReservations from './locales/en/reservations.json'
 import heCommon from './locales/he/common.json'
 import heSettings from './locales/he/settings.json'
 import heAuth from './locales/he/auth.json'
 import heTasks from './locales/he/tasks.json'
+import heVouchers from './locales/he/vouchers.json'
+import heReservations from './locales/he/reservations.json'
 
 void i18n.use(initReactI18next).init({
   lng: localStorage.getItem('homehub-language') ?? 'en',
@@ -19,15 +23,19 @@ void i18n.use(initReactI18next).init({
       settings: enSettings,
       auth: enAuth,
       tasks: enTasks,
+      vouchers: enVouchers,
+      reservations: enReservations,
     },
     he: {
       common: heCommon,
       settings: heSettings,
       auth: heAuth,
       tasks: heTasks,
+      vouchers: heVouchers,
+      reservations: heReservations,
     },
   },
-  ns: ['common', 'settings', 'auth', 'tasks'],
+  ns: ['common', 'settings', 'auth', 'tasks', 'vouchers', 'reservations'],
   defaultNS: 'common',
   interpolation: {
     escapeValue: false,

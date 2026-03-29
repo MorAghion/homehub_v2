@@ -57,10 +57,26 @@ export default function App() {
             }
           />
           <Route
+            path="/vouchers"
+            element={
+              <ProtectedRoute>
+                <VouchersHubPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/vouchers/:id"
             element={
               <ProtectedRoute>
                 <VouchersHubPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reservations"
+            element={
+              <ProtectedRoute>
+                <ReservationsHubPage />
               </ProtectedRoute>
             }
           />
