@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useSession } from './contexts/AuthContext'
 import { useUrgentTasks } from './hooks/useUrgentTasks'
 import BottomNav from './components/shared/BottomNav'
+import InstallPrompt from './components/shared/InstallPrompt'
 
 const AuthPage = lazy(() => import('./pages/AuthPage'))
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -22,6 +23,7 @@ function ProtectedLayout({ children }: { children: React.ReactNode }) {
     <>
       {children}
       <BottomNav urgentCount={urgent.totalCount} />
+      <InstallPrompt />
     </>
   )
 }
@@ -82,14 +84,6 @@ export default function App() {
             }
           />
           <Route
-            path="/vouchers"
-            element={
-              <ProtectedRoute>
-                <VouchersHubPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/vouchers/:id"
             element={
               <ProtectedLayout>
@@ -103,14 +97,6 @@ export default function App() {
               <ProtectedLayout>
                 <ReservationsHubPage />
               </ProtectedLayout>
-            }
-          />
-          <Route
-            path="/reservations"
-            element={
-              <ProtectedRoute>
-                <ReservationsHubPage />
-              </ProtectedRoute>
             }
           />
           <Route

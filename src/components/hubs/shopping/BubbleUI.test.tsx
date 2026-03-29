@@ -59,7 +59,7 @@ describe('BubbleUI', () => {
     )
     await user.click(screen.getByTestId('bubble-grocery'))
     expect(onInjectPack).toHaveBeenCalledOnce()
-    const items: string[] = onInjectPack.mock.calls[0][0]
+    const items: string[] = onInjectPack.mock.calls[0]?.[0] as string[]
     expect(items.length).toBeGreaterThan(0)
     // Grocery pack includes Milk
     expect(items).toContain('Milk')
