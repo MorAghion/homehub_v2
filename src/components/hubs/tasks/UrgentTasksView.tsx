@@ -28,9 +28,9 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[--color-background]">
+    <div className="flex flex-col min-h-screen bg-(--color-background)">
       {/* Header */}
-      <header className="bg-[--color-urgency-critical] px-4 py-3.5 flex items-center gap-3">
+      <header className="bg-(--color-urgency-critical) px-4 py-3.5 flex items-center gap-3">
         <button
           type="button"
           onClick={onBack}
@@ -52,13 +52,13 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
       {/* Content */}
       <div className="flex-1 pb-20" data-testid="urgent-tasks-view">
         {isLoading ? (
-          <div className="py-16 text-center text-sm text-[--color-muted]">
+          <div className="py-16 text-center text-sm text-(--color-muted)">
             <span className="block text-2xl mb-2">⏳</span>
           </div>
         ) : items.length === 0 ? (
           <div className="py-16 text-center" data-testid="urgent-empty-state">
             <span className="block text-3xl mb-3">✅</span>
-            <p className="text-sm text-[--color-muted]">{t('urgentTasks.emptyState')}</p>
+            <p className="text-sm text-(--color-muted)">{t('urgentTasks.emptyState')}</p>
           </div>
         ) : (
           <>
@@ -67,10 +67,10 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
               <>
                 <div className="flex items-center gap-2 px-4 pt-3.5 pb-1.5">
                   <span className="text-xs" aria-hidden="true">⚡</span>
-                  <span className="text-xs font-bold text-[--color-muted] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-(--color-muted) uppercase tracking-wider">
                     {t('urgentTasks.tasksSection')}
                   </span>
-                  <span className="text-xs font-bold text-[--color-muted] bg-[--color-muted]/15 rounded-full px-2 py-0.5">
+                  <span className="text-xs font-bold text-(--color-muted) bg-(--color-muted)/15 rounded-full px-2 py-0.5">
                     {taskItems.length}
                   </span>
                 </div>
@@ -78,7 +78,7 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
                 {taskItems.map(({ task, listName }) => (
                   <div
                     key={task.id}
-                    className="flex items-center gap-3 px-4 py-3.5 bg-[--color-surface] border-b border-[--color-muted]/10"
+                    className="flex items-center gap-3 px-4 py-3.5 bg-(--color-surface) border-b border-(--color-muted)/10"
                     data-testid="urgent-task-row"
                   >
                     {/* Urgency badge */}
@@ -86,12 +86,12 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
                       className={[
                         'flex-shrink-0 text-[10px] font-bold uppercase tracking-wide rounded-sm px-1.5 py-0.5',
                         task.urgency === 'critical'
-                          ? 'bg-[--color-urgency-critical]/12 text-[--color-urgency-critical]'
+                          ? 'bg-(--color-urgency-critical)/12 text-(--color-urgency-critical)'
                           : task.urgency === 'high'
-                          ? 'bg-[--color-urgency-high]/12 text-[--color-urgency-high]'
+                          ? 'bg-(--color-urgency-high)/12 text-(--color-urgency-high)'
                           : task.urgency === 'medium'
-                          ? 'bg-[--color-urgency-medium]/12 text-[--color-urgency-medium]'
-                          : 'bg-[--color-urgency-low]/12 text-[--color-urgency-low]',
+                          ? 'bg-(--color-urgency-medium)/12 text-(--color-urgency-medium)'
+                          : 'bg-(--color-urgency-low)/12 text-(--color-urgency-low)',
                       ].join(' ')}
                       data-testid="urgency-badge"
                     >
@@ -105,13 +105,13 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
                       </p>
                       <div className="flex items-center gap-1.5">
                         <span
-                          className="text-[10px] font-semibold rounded-sm px-1.5 py-0.5 bg-[--color-primary]/8 text-[--color-primary]"
+                          className="text-[10px] font-semibold rounded-sm px-1.5 py-0.5 bg-(--color-primary)/8 text-(--color-primary)"
                           data-testid="subhub-label"
                         >
                           {listName}
                         </span>
                         {task.due_date && (
-                          <span className="text-xs text-[--color-muted]">
+                          <span className="text-xs text-(--color-muted)">
                             {formatDate(task.due_date)}
                           </span>
                         )}
@@ -127,7 +127,7 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
 
             {/* Divider between tasks and bills */}
             {taskItems.length > 0 && billItems.length > 0 && (
-              <div className="h-2 bg-[--color-background] border-t border-b border-[--color-muted]/15" />
+              <div className="h-2 bg-(--color-background) border-t border-b border-(--color-muted)/15" />
             )}
 
             {/* Bills section */}
@@ -135,10 +135,10 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
               <>
                 <div className="flex items-center gap-2 px-4 pt-3.5 pb-1.5">
                   <span className="text-xs" aria-hidden="true">📄</span>
-                  <span className="text-xs font-bold text-[--color-muted] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-(--color-muted) uppercase tracking-wider">
                     {t('urgentTasks.billsSection')}
                   </span>
-                  <span className="text-xs font-bold text-[--color-muted] bg-[--color-muted]/15 rounded-full px-2 py-0.5">
+                  <span className="text-xs font-bold text-(--color-muted) bg-(--color-muted)/15 rounded-full px-2 py-0.5">
                     {billItems.length}
                   </span>
                 </div>
@@ -146,11 +146,11 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
                 {billItems.map(({ bill }) => (
                   <div
                     key={bill.id}
-                    className="flex items-center gap-3 px-4 py-3.5 bg-[--color-surface] border-b border-[--color-muted]/10"
+                    className="flex items-center gap-3 px-4 py-3.5 bg-(--color-surface) border-b border-(--color-muted)/10"
                     data-testid="bill-row"
                   >
                     {/* Bill icon */}
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-[--color-error]/8 flex-shrink-0">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-(--color-error)/8 flex-shrink-0">
                       <span className="text-lg" aria-hidden="true">💳</span>
                     </div>
 
@@ -161,12 +161,12 @@ export default function UrgentTasksView({ items, isLoading, onBack }: UrgentTask
                         <p className="text-[15px] font-bold text-[#1a1a1a] ms-2 flex-shrink-0">{bill.amount}</p>
                       </div>
                       <div className="flex items-center justify-between">
-                        <p className="text-xs font-semibold text-[--color-urgency-critical]">
+                        <p className="text-xs font-semibold text-(--color-urgency-critical)">
                           {formatDate(bill.due_date)}
                         </p>
                         <button
                           type="button"
-                          className="text-[11px] font-bold px-2.5 py-1 rounded-md bg-[--color-urgency-critical] text-white hover:opacity-90 transition-opacity"
+                          className="text-[11px] font-bold px-2.5 py-1 rounded-md bg-(--color-urgency-critical) text-white hover:opacity-90 transition-opacity"
                         >
                           {t('urgentTasks.payNow')}
                         </button>

@@ -144,7 +144,7 @@ function SignInForm() {
           <button
             type="button"
             onClick={() => setSearchParams({ mode: 'forgot' })}
-            className="text-xs text-[--color-primary] hover:underline"
+            className="text-xs text-(--color-primary) hover:underline"
           >
             {t('signIn.forgotPassword')}
           </button>
@@ -168,9 +168,9 @@ function SignInForm() {
       </button>
 
       <div className="relative flex items-center gap-2 py-1">
-        <div className="flex-1 h-px bg-[--color-muted]/20" />
-        <span className="text-xs text-[--color-muted]">or</span>
-        <div className="flex-1 h-px bg-[--color-muted]/20" />
+        <div className="flex-1 h-px bg-(--color-muted)/20" />
+        <span className="text-xs text-(--color-muted)">or</span>
+        <div className="flex-1 h-px bg-(--color-muted)/20" />
       </div>
 
       <button
@@ -269,7 +269,7 @@ function SignUpForm() {
 
   if (success) {
     return (
-      <div className="py-4 text-center text-sm text-[--color-muted]">
+      <div className="py-4 text-center text-sm text-(--color-muted)">
         {t('signUp.checkEmail')}
       </div>
     )
@@ -332,9 +332,9 @@ function SignUpForm() {
       </button>
 
       <div className="relative flex items-center gap-2 py-1">
-        <div className="flex-1 h-px bg-[--color-muted]/20" />
-        <span className="text-xs text-[--color-muted]">or</span>
-        <div className="flex-1 h-px bg-[--color-muted]/20" />
+        <div className="flex-1 h-px bg-(--color-muted)/20" />
+        <span className="text-xs text-(--color-muted)">or</span>
+        <div className="flex-1 h-px bg-(--color-muted)/20" />
       </div>
 
       <button
@@ -400,7 +400,7 @@ function JoinForm() {
 
   if (success) {
     return (
-      <div className="py-4 text-center text-sm text-[--color-muted]">
+      <div className="py-4 text-center text-sm text-(--color-muted)">
         {t('join.checkEmail')}
       </div>
     )
@@ -513,10 +513,10 @@ function ForgotForm({ onBack }: { onBack: () => void }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm text-[--color-muted]">{t('forgot.description')}</p>
+      <p className="text-sm text-(--color-muted)">{t('forgot.description')}</p>
 
       {sent ? (
-        <p className="text-sm text-[--color-success] font-medium">{t('forgot.sent')}</p>
+        <p className="text-sm text-(--color-success) font-medium">{t('forgot.sent')}</p>
       ) : (
         <form onSubmit={(e) => void handleSubmit(e)} noValidate className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
@@ -546,7 +546,7 @@ function ForgotForm({ onBack }: { onBack: () => void }) {
       <button
         type="button"
         onClick={onBack}
-        className="text-sm text-[--color-primary] hover:underline self-center"
+        className="text-sm text-(--color-primary) hover:underline self-center"
       >
         {t('forgot.backToSignIn')}
       </button>
@@ -590,7 +590,7 @@ function ResetForm({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex flex-col gap-4">
       {success ? (
-        <p className="text-sm text-[--color-success] font-medium">{t('reset.success')}</p>
+        <p className="text-sm text-(--color-success) font-medium">{t('reset.success')}</p>
       ) : (
         <form onSubmit={(e) => void handleSubmit(e)} noValidate className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
@@ -620,7 +620,7 @@ function ResetForm({ onBack }: { onBack: () => void }) {
       <button
         type="button"
         onClick={onBack}
-        className="text-sm text-[--color-primary] hover:underline self-center"
+        className="text-sm text-(--color-primary) hover:underline self-center"
       >
         {t('reset.backToSignIn')}
       </button>
@@ -676,11 +676,11 @@ function CreateHouseholdModal({ onCreated }: { onCreated: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 sm:items-center">
-      <div className="w-full max-w-md rounded-t-xl sm:rounded-xl bg-[--color-surface] p-6 shadow-xl">
+      <div className="w-full max-w-md rounded-t-xl sm:rounded-xl bg-(--color-surface) p-6 shadow-xl">
         <h2 className="text-lg font-semibold text-[#1a1a1a] mb-1">
           {t('createHousehold.title')}
         </h2>
-        <p className="text-sm text-[--color-muted] mb-4">
+        <p className="text-sm text-(--color-muted) mb-4">
           {t('createHousehold.description')}
         </p>
         <form onSubmit={(e) => void handleSubmit(e)} noValidate className="flex flex-col gap-4">
@@ -716,29 +716,29 @@ function CreateHouseholdModal({ onCreated }: { onCreated: () => void }) {
 // ---------------------------------------------------------------------------
 
 const inputClass = [
-  'w-full rounded-md border border-[--color-muted]/30',
-  'bg-[--color-surface] px-3 py-2.5',
-  'text-base text-[#1a1a1a] placeholder:text-[--color-muted]',
-  'focus:outline-none focus:ring-2 focus:ring-[--color-primary]/40 focus:border-[--color-primary]',
+  'w-full rounded-md border border-(--color-muted)/30',
+  'bg-(--color-surface) px-3 py-2.5',
+  'text-base text-[#1a1a1a] placeholder:text-(--color-muted)',
+  'focus:outline-none focus:ring-2 focus:ring-(--color-primary)/40 focus:border-(--color-primary)',
   'transition-colors',
 ].join(' ')
 
 const primaryButtonClass = [
-  'w-full rounded-md bg-[--color-primary] px-4 py-2.5',
+  'w-full rounded-md bg-(--color-primary) px-4 py-2.5',
   'text-base font-semibold text-white',
   'hover:opacity-90 active:opacity-80 transition-opacity',
   'disabled:opacity-50 disabled:cursor-not-allowed',
 ].join(' ')
 
 const googleButtonClass = [
-  'w-full rounded-md border border-[--color-muted]/30',
-  'bg-[--color-surface] px-4 py-2.5',
+  'w-full rounded-md border border-(--color-muted)/30',
+  'bg-(--color-surface) px-4 py-2.5',
   'flex items-center justify-center gap-2',
   'text-base font-semibold text-[#1a1a1a]',
-  'hover:bg-[--color-background] active:bg-[--color-background]/80 transition-colors',
+  'hover:bg-(--color-background) active:bg-(--color-background)/80 transition-colors',
 ].join(' ')
 
-const errorClass = 'text-sm text-[--color-error] font-medium'
+const errorClass = 'text-sm text-(--color-error) font-medium'
 
 // ---------------------------------------------------------------------------
 // Google icon SVG
@@ -809,7 +809,7 @@ export default function AuthPage() {
     : t('signIn.title')
 
   return (
-    <main className="min-h-screen bg-[--color-background] flex flex-col items-center justify-center px-4 py-12">
+    <main className="min-h-screen bg-(--color-background) flex flex-col items-center justify-center px-4 py-12">
       {/* Create Household modal — shown when signed in but household_id is null */}
       {needsHousehold && (
         <CreateHouseholdModal onCreated={() => void refreshProfile()} />
@@ -818,11 +818,11 @@ export default function AuthPage() {
       <div className="w-full max-w-sm">
         {/* App logo / wordmark */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-[--color-primary]">HomeHub</h1>
+          <h1 className="text-2xl font-bold text-(--color-primary)">HomeHub</h1>
         </div>
 
         {/* Card */}
-        <div className="bg-[--color-surface] rounded-xl shadow-md p-6">
+        <div className="bg-(--color-surface) rounded-xl shadow-md p-6">
           {/* Mode title (shown for forgot/reset only — tabs cover the rest) */}
           {isForgotOrReset ? (
             <h2 className="text-lg font-semibold text-[#1a1a1a] mb-4">{title}</h2>
@@ -831,7 +831,7 @@ export default function AuthPage() {
             <div
               role="tablist"
               aria-label="Auth mode"
-              className="flex gap-0 mb-6 border-b border-[--color-muted]/20"
+              className="flex gap-0 mb-6 border-b border-(--color-muted)/20"
             >
               {tabModes.map(({ key, label }) => (
                 <button
@@ -843,8 +843,8 @@ export default function AuthPage() {
                   className={classNames(
                     'flex-1 pb-2.5 text-sm font-semibold transition-colors border-b-2',
                     activeTab === key
-                      ? 'text-[--color-primary] border-[--color-primary]'
-                      : 'text-[--color-muted] border-transparent hover:text-[#1a1a1a]',
+                      ? 'text-(--color-primary) border-(--color-primary)'
+                      : 'text-(--color-muted) border-transparent hover:text-[#1a1a1a]',
                   )}
                 >
                   {label}

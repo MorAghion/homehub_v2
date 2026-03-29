@@ -141,9 +141,9 @@ export default function TasksHubPage() {
     }
 
     return (
-      <div className="flex flex-col min-h-screen bg-[--color-background]">
+      <div className="flex flex-col min-h-screen bg-(--color-background)">
         {/* Header */}
-        <header className="bg-[--color-primary] px-4 py-4 flex items-center gap-3">
+        <header className="bg-(--color-primary) px-4 py-4 flex items-center gap-3">
           <button
             type="button"
             onClick={() => navigate('/tasks')}
@@ -176,7 +176,7 @@ export default function TasksHubPage() {
 
         {/* Edit mode toolbar */}
         {isEditMode && (
-          <div className="bg-[--color-surface] border-b border-[--color-muted]/15 px-4 py-3 flex items-center justify-between gap-3">
+          <div className="bg-(--color-surface) border-b border-(--color-muted)/15 px-4 py-3 flex items-center justify-between gap-3">
             <span className="text-sm font-medium text-[#1a1a1a]">
               {t('editMode.selected', { count: selectedTaskIds.size })}
             </span>
@@ -185,7 +185,7 @@ export default function TasksHubPage() {
                 <button
                   type="button"
                   onClick={() => setShowClearConfirm(true)}
-                  className="text-sm font-semibold text-[--color-muted] hover:text-[#1a1a1a] transition-colors"
+                  className="text-sm font-semibold text-(--color-muted) hover:text-[#1a1a1a] transition-colors"
                 >
                   {t('editMode.clearCompleted')} ({doneCount})
                 </button>
@@ -194,7 +194,7 @@ export default function TasksHubPage() {
                 <button
                   type="button"
                   onClick={() => void handleBulkDeleteTasks()}
-                  className="text-sm font-semibold text-[--color-error]"
+                  className="text-sm font-semibold text-(--color-error)"
                 >
                   {t('editMode.deleteSelected')}
                 </button>
@@ -205,19 +205,19 @@ export default function TasksHubPage() {
 
         {/* Error */}
         {(pageError || hub.error) && (
-          <div className="bg-[--color-error]/10 border-b border-[--color-error]/20 px-4 py-2">
-            <p className="text-xs text-[--color-error]">{pageError ?? hub.error}</p>
+          <div className="bg-(--color-error)/10 border-b border-(--color-error)/20 px-4 py-2">
+            <p className="text-xs text-(--color-error)">{pageError ?? hub.error}</p>
           </div>
         )}
 
         {/* Task list */}
         <main className="flex-1 pb-24">
           {hub.isLoading ? (
-            <div className="py-16 text-center text-sm text-[--color-muted]">{tc('loading')}</div>
+            <div className="py-16 text-center text-sm text-(--color-muted)">{tc('loading')}</div>
           ) : tasks.length === 0 ? (
             <div className="py-16 text-center">
               <span className="block text-3xl mb-3">✅</span>
-              <p className="text-sm text-[--color-muted]">{t('hub.emptyState')}</p>
+              <p className="text-sm text-(--color-muted)">{t('hub.emptyState')}</p>
             </div>
           ) : (
             tasks.map((task) => (
@@ -247,7 +247,7 @@ export default function TasksHubPage() {
               setShowCreateTaskModal(true)
             }}
             aria-label={t('modal.createTitle')}
-            className="fixed bottom-24 end-4 w-14 h-14 rounded-full bg-[--color-primary] text-white shadow-lg flex items-center justify-center hover:opacity-90 active:scale-95 transition-all"
+            className="fixed bottom-24 end-4 w-14 h-14 rounded-full bg-(--color-primary) text-white shadow-lg flex items-center justify-center hover:opacity-90 active:scale-95 transition-all"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -285,7 +285,7 @@ export default function TasksHubPage() {
               <button
                 type="button"
                 onClick={() => setShowClearConfirm(false)}
-                className="flex-1 py-2.5 rounded-md border border-[--color-muted]/30 text-sm font-semibold text-[--color-muted]"
+                className="flex-1 py-2.5 rounded-md border border-(--color-muted)/30 text-sm font-semibold text-(--color-muted)"
               >
                 {tc('cancel')}
               </button>
@@ -293,14 +293,14 @@ export default function TasksHubPage() {
                 type="button"
                 onClick={() => void handleClearCompleted()}
                 disabled={isSaving}
-                className="flex-1 py-2.5 rounded-md bg-[--color-error] text-white text-sm font-semibold disabled:opacity-50"
+                className="flex-1 py-2.5 rounded-md bg-(--color-error) text-white text-sm font-semibold disabled:opacity-50"
               >
                 {isSaving ? tc('loading') : tc('confirm')}
               </button>
             </div>
           }
         >
-          <p className="text-sm text-[--color-muted]">
+          <p className="text-sm text-(--color-muted)">
             {t('editMode.clearMessage', { count: doneCount })}
           </p>
         </BaseModal>

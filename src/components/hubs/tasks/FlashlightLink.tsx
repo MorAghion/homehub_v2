@@ -55,7 +55,7 @@ export default function FlashlightLink({ task, listName }: FlashlightLinkProps) 
       data-testid="flashlight-link"
       className={[
         'flex-shrink-0 p-1.5 rounded-md',
-        'text-[--color-muted] hover:text-[--color-primary]',
+        'text-(--color-muted) hover:text-(--color-primary)',
         'transition-colors',
       ].join(' ')}
     >

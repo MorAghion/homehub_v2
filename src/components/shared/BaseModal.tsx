@@ -59,7 +59,7 @@ export default function BaseModal({
       onClick={handleBackdropClick}
       className={[
         'fixed inset-x-0 bottom-0 m-0 w-full max-w-lg mx-auto',
-        'rounded-t-xl bg-[--color-surface] shadow-xl',
+        'rounded-t-xl bg-(--color-surface) shadow-xl',
         'p-0 max-h-[90vh] overflow-y-auto',
         'backdrop:bg-black/50',
         'open:animate-slide-up',
@@ -68,7 +68,7 @@ export default function BaseModal({
       aria-labelledby="modal-title"
     >
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-4 border-b border-[--color-muted]/20">
+      <div className="flex items-center gap-3 px-4 py-4 border-b border-(--color-muted)/20">
         <h2
           id="modal-title"
           className="flex-1 text-base font-semibold text-[#1a1a1a]"
@@ -79,7 +79,7 @@ export default function BaseModal({
           type="button"
           onClick={onClose}
           aria-label={t('close')}
-          className="p-1 rounded-md text-[--color-muted] hover:text-[#1a1a1a] transition-colors"
+          className="p-1 rounded-md text-(--color-muted) hover:text-[#1a1a1a] transition-colors"
         >
           <svg
             width="20"
@@ -103,7 +103,7 @@ export default function BaseModal({
 
       {/* Footer */}
       {footer && (
-        <div className="flex items-center gap-3 px-4 pb-6 pt-2 border-t border-[--color-muted]/20">
+        <div className="flex items-center gap-3 px-4 pb-6 pt-2 border-t border-(--color-muted)/20">
           {footer}
         </div>
       )}

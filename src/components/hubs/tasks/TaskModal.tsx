@@ -137,7 +137,7 @@ export default function TaskModal({
               type="button"
               onClick={() => void handleDelete()}
               disabled={isDeleting}
-              className="text-sm font-medium text-[--color-error] hover:text-[--color-error]/80 transition-colors me-auto disabled:opacity-50"
+              className="text-sm font-medium text-(--color-error) hover:text-(--color-error)/80 transition-colors me-auto disabled:opacity-50"
             >
               {tc('delete')}
             </button>
@@ -145,7 +145,7 @@ export default function TaskModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-md border border-[--color-muted]/30 text-sm font-semibold text-[--color-muted] hover:bg-[--color-muted]/5 transition-colors"
+            className="flex-1 py-2.5 rounded-md border border-(--color-muted)/30 text-sm font-semibold text-(--color-muted) hover:bg-(--color-muted)/5 transition-colors"
           >
             {tc('cancel')}
           </button>
@@ -153,7 +153,7 @@ export default function TaskModal({
             type="button"
             onClick={() => void handleSave()}
             disabled={isSaving}
-            className="flex-1 py-2.5 rounded-md bg-[--color-primary] text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="flex-1 py-2.5 rounded-md bg-(--color-primary) text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
           >
             {isSaving ? tc('loading') : isEditing ? t('modal.saveEdit') : t('modal.saveCreate')}
           </button>
@@ -163,7 +163,7 @@ export default function TaskModal({
       <div className="flex flex-col gap-4">
         {/* Title */}
         <div>
-          <label className="block text-xs font-medium text-[--color-muted] mb-1">
+          <label className="block text-xs font-medium text-(--color-muted) mb-1">
             {t('modal.titleLabel')} *
           </label>
           <input
@@ -173,21 +173,21 @@ export default function TaskModal({
             placeholder={t('modal.titlePlaceholder')}
             maxLength={200}
             className={[
-              'w-full rounded-md px-3 py-2.5 text-sm bg-[--color-background]',
+              'w-full rounded-md px-3 py-2.5 text-sm bg-(--color-background)',
               'border focus:outline-none focus:ring-1 transition-colors',
               titleError
-                ? 'border-[--color-error] focus:ring-[--color-error]/30'
-                : 'border-[--color-muted]/20 focus:border-[--color-primary] focus:ring-[--color-primary]/20',
+                ? 'border-(--color-error) focus:ring-(--color-error)/30'
+                : 'border-(--color-muted)/20 focus:border-(--color-primary) focus:ring-(--color-primary)/20',
             ].join(' ')}
           />
           {titleError && (
-            <p className="mt-1 text-xs text-[--color-error]">{t('modal.titleLabel')} is required</p>
+            <p className="mt-1 text-xs text-(--color-error)">{t('modal.titleLabel')} is required</p>
           )}
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-xs font-medium text-[--color-muted] mb-1">
+          <label className="block text-xs font-medium text-(--color-muted) mb-1">
             {t('modal.descriptionLabel')}
           </label>
           <textarea
@@ -195,20 +195,20 @@ export default function TaskModal({
             onChange={(e) => update('description', e.target.value)}
             placeholder={t('modal.descriptionPlaceholder')}
             rows={2}
-            className="w-full rounded-md px-3 py-2.5 text-sm bg-[--color-background] border border-[--color-muted]/20 focus:outline-none focus:border-[--color-primary] focus:ring-1 focus:ring-[--color-primary]/20 transition-colors resize-none"
+            className="w-full rounded-md px-3 py-2.5 text-sm bg-(--color-background) border border-(--color-muted)/20 focus:outline-none focus:border-(--color-primary) focus:ring-1 focus:ring-(--color-primary)/20 transition-colors resize-none"
           />
         </div>
 
         {/* Status + Urgency row */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[--color-muted] mb-1">
+            <label className="block text-xs font-medium text-(--color-muted) mb-1">
               {t('modal.statusLabel')}
             </label>
             <select
               value={form.status}
               onChange={(e) => update('status', e.target.value as TaskStatus)}
-              className="w-full rounded-md px-3 py-2.5 text-sm bg-[--color-background] border border-[--color-muted]/20 focus:outline-none focus:border-[--color-primary] focus:ring-1 focus:ring-[--color-primary]/20 transition-colors"
+              className="w-full rounded-md px-3 py-2.5 text-sm bg-(--color-background) border border-(--color-muted)/20 focus:outline-none focus:border-(--color-primary) focus:ring-1 focus:ring-(--color-primary)/20 transition-colors"
             >
               {TASK_STATUSES.map((s) => (
                 <option key={s} value={s}>{t(`status.${s}`)}</option>
@@ -216,13 +216,13 @@ export default function TaskModal({
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[--color-muted] mb-1">
+            <label className="block text-xs font-medium text-(--color-muted) mb-1">
               {t('modal.urgencyLabel')}
             </label>
             <select
               value={form.urgency}
               onChange={(e) => update('urgency', e.target.value as TaskUrgency)}
-              className="w-full rounded-md px-3 py-2.5 text-sm bg-[--color-background] border border-[--color-muted]/20 focus:outline-none focus:border-[--color-primary] focus:ring-1 focus:ring-[--color-primary]/20 transition-colors"
+              className="w-full rounded-md px-3 py-2.5 text-sm bg-(--color-background) border border-(--color-muted)/20 focus:outline-none focus:border-(--color-primary) focus:ring-1 focus:ring-(--color-primary)/20 transition-colors"
             >
               {TASK_URGENCIES.map((u) => (
                 <option key={u} value={u}>{t(`urgency.${u}`)}</option>
@@ -235,7 +235,7 @@ export default function TaskModal({
         <div className="flex items-center justify-between py-1">
           <div>
             <p className="text-sm font-medium text-[#1a1a1a]">{t('modal.isUrgentLabel')}</p>
-            <p className="text-xs text-[--color-muted]">{t('modal.isUrgentHint')}</p>
+            <p className="text-xs text-(--color-muted)">{t('modal.isUrgentHint')}</p>
           </div>
           <button
             type="button"
@@ -244,7 +244,7 @@ export default function TaskModal({
             onClick={() => update('is_urgent', !form.is_urgent)}
             className={[
               'relative w-11 h-6 rounded-full transition-colors',
-              form.is_urgent ? 'bg-[--color-primary]' : 'bg-[--color-muted]/30',
+              form.is_urgent ? 'bg-(--color-primary)' : 'bg-(--color-muted)/30',
             ].join(' ')}
           >
             <span
@@ -258,13 +258,13 @@ export default function TaskModal({
 
         {/* Assignee */}
         <div>
-          <label className="block text-xs font-medium text-[--color-muted] mb-1">
+          <label className="block text-xs font-medium text-(--color-muted) mb-1">
             {t('modal.assigneeLabel')}
           </label>
           <select
             value={form.assignee_id}
             onChange={(e) => update('assignee_id', e.target.value)}
-            className="w-full rounded-md px-3 py-2.5 text-sm bg-[--color-background] border border-[--color-muted]/20 focus:outline-none focus:border-[--color-primary] focus:ring-1 focus:ring-[--color-primary]/20 transition-colors"
+            className="w-full rounded-md px-3 py-2.5 text-sm bg-(--color-background) border border-(--color-muted)/20 focus:outline-none focus:border-(--color-primary) focus:ring-1 focus:ring-(--color-primary)/20 transition-colors"
           >
             <option value="">{t('modal.assigneeNone')}</option>
             {members.map((m) => (
@@ -275,20 +275,20 @@ export default function TaskModal({
 
         {/* Due date */}
         <div>
-          <label className="block text-xs font-medium text-[--color-muted] mb-1">
+          <label className="block text-xs font-medium text-(--color-muted) mb-1">
             {t('modal.dueDateLabel')}
           </label>
           <input
             type="date"
             value={form.due_date}
             onChange={(e) => update('due_date', e.target.value)}
-            className="w-full rounded-md px-3 py-2.5 text-sm bg-[--color-background] border border-[--color-muted]/20 focus:outline-none focus:border-[--color-primary] focus:ring-1 focus:ring-[--color-primary]/20 transition-colors"
+            className="w-full rounded-md px-3 py-2.5 text-sm bg-(--color-background) border border-(--color-muted)/20 focus:outline-none focus:border-(--color-primary) focus:ring-1 focus:ring-(--color-primary)/20 transition-colors"
           />
         </div>
 
         {/* Notes */}
         <div>
-          <label className="block text-xs font-medium text-[--color-muted] mb-1">
+          <label className="block text-xs font-medium text-(--color-muted) mb-1">
             {t('modal.notesLabel')}
           </label>
           <textarea
@@ -296,7 +296,7 @@ export default function TaskModal({
             onChange={(e) => update('notes', e.target.value)}
             placeholder={t('modal.notesPlaceholder')}
             rows={3}
-            className="w-full rounded-md px-3 py-2.5 text-sm bg-[--color-background] border border-[--color-muted]/20 focus:outline-none focus:border-[--color-primary] focus:ring-1 focus:ring-[--color-primary]/20 transition-colors resize-none"
+            className="w-full rounded-md px-3 py-2.5 text-sm bg-(--color-background) border border-(--color-muted)/20 focus:outline-none focus:border-(--color-primary) focus:ring-1 focus:ring-(--color-primary)/20 transition-colors resize-none"
           />
         </div>
       </div>

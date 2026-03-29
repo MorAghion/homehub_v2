@@ -19,10 +19,10 @@ interface TaskCardProps {
 }
 
 const URGENCY_CLASSES: Record<TaskUrgency, { badge: string; dot: string }> = {
-  low:      { badge: 'bg-[--color-urgency-low]/10 text-[--color-urgency-low]',      dot: 'bg-[--color-urgency-low]' },
-  medium:   { badge: 'bg-[--color-urgency-medium]/10 text-[--color-urgency-medium]', dot: 'bg-[--color-urgency-medium]' },
-  high:     { badge: 'bg-[--color-urgency-high]/10 text-[--color-urgency-high]',     dot: 'bg-[--color-urgency-high]' },
-  critical: { badge: 'bg-[--color-urgency-critical]/10 text-[--color-urgency-critical]', dot: 'bg-[--color-urgency-critical]' },
+  low:      { badge: 'bg-(--color-urgency-low)/10 text-(--color-urgency-low)',      dot: 'bg-(--color-urgency-low)' },
+  medium:   { badge: 'bg-(--color-urgency-medium)/10 text-(--color-urgency-medium)', dot: 'bg-(--color-urgency-medium)' },
+  high:     { badge: 'bg-(--color-urgency-high)/10 text-(--color-urgency-high)',     dot: 'bg-(--color-urgency-high)' },
+  critical: { badge: 'bg-(--color-urgency-critical)/10 text-(--color-urgency-critical)', dot: 'bg-(--color-urgency-critical)' },
 }
 
 export default function TaskCard({
@@ -64,10 +64,10 @@ export default function TaskCard({
       data-testid="task-card"
       className={[
         'flex items-center gap-3 px-4 py-3',
-        'bg-[--color-surface] border-b border-[--color-muted]/10',
+        'bg-(--color-surface) border-b border-(--color-muted)/10',
         'cursor-pointer transition-colors',
         isDone ? 'opacity-60' : '',
-        isSelected ? 'bg-[--color-primary]/5' : 'hover:bg-[--color-muted]/5',
+        isSelected ? 'bg-(--color-primary)/5' : 'hover:bg-(--color-muted)/5',
       ].join(' ')}
     >
       {/* Edit mode: checkbox */}
@@ -76,8 +76,8 @@ export default function TaskCard({
           className={[
             'w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0',
             isSelected
-              ? 'border-[--color-primary] bg-[--color-primary]'
-              : 'border-[--color-muted]/40',
+              ? 'border-(--color-primary) bg-(--color-primary)'
+              : 'border-(--color-muted)/40',
           ].join(' ')}
           aria-hidden="true"
         >
@@ -100,7 +100,7 @@ export default function TaskCard({
           <span
             className={[
               'text-sm font-medium leading-snug truncate',
-              isDone ? 'line-through text-[--color-muted]' : 'text-[#1a1a1a]',
+              isDone ? 'line-through text-(--color-muted)' : 'text-[#1a1a1a]',
             ].join(' ')}
           >
             {task.title}
@@ -127,7 +127,7 @@ export default function TaskCard({
             <span
               className={[
                 'text-xs font-medium',
-                overdue ? 'text-[--color-urgency-critical]' : dueToday ? 'text-[--color-urgency-high]' : 'text-[--color-muted]',
+                overdue ? 'text-(--color-urgency-critical)' : dueToday ? 'text-(--color-urgency-high)' : 'text-(--color-muted)',
               ].join(' ')}
             >
               {overdue
@@ -140,7 +140,7 @@ export default function TaskCard({
 
           {/* Assignee */}
           {assignee && (
-            <span className="text-xs text-[--color-muted] truncate max-w-[80px]">
+            <span className="text-xs text-(--color-muted) truncate max-w-[80px]">
               {assignee.display_name}
             </span>
           )}
@@ -149,7 +149,7 @@ export default function TaskCard({
 
       {/* Status indicator for done */}
       {isDone && !isEditMode && (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="flex-shrink-0 text-[--color-success]">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="flex-shrink-0 text-(--color-success)">
           <circle cx="9" cy="9" r="8" stroke="currentColor" strokeWidth="1.5" />
           <path d="M5.5 9l2.5 2.5 4.5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -157,7 +157,7 @@ export default function TaskCard({
 
       {/* Chevron for open tasks */}
       {!isDone && !isEditMode && (
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="flex-shrink-0 text-[--color-muted]/50">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="flex-shrink-0 text-(--color-muted)/50">
           <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       )}

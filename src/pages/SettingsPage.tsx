@@ -79,7 +79,7 @@ function getInitial(name: string): string {
 // ---------------------------------------------------------------------------
 
 const AVATAR_COLORS = [
-  'bg-[--color-primary]',
+  'bg-(--color-primary)',
   '#1E40AF',
   '#6D28D9',
   '#065F46',
@@ -268,10 +268,10 @@ export default function SettingsPage() {
   if (isLoading) {
     return (
       <div
-        className="flex min-h-screen items-center justify-center bg-[--color-background]"
+        className="flex min-h-screen items-center justify-center bg-(--color-background)"
         data-testid="settings-page"
       >
-        <p className="text-sm text-[--color-muted]">{t('common:loading')}</p>
+        <p className="text-sm text-(--color-muted)">{t('common:loading')}</p>
       </div>
     )
   }
@@ -279,10 +279,10 @@ export default function SettingsPage() {
   if (error || !profile) {
     return (
       <div
-        className="flex min-h-screen items-center justify-center bg-[--color-background]"
+        className="flex min-h-screen items-center justify-center bg-(--color-background)"
         data-testid="settings-page"
       >
-        <p className="text-sm text-[--color-error]">{error ?? t('common:error')}</p>
+        <p className="text-sm text-(--color-error)">{error ?? t('common:error')}</p>
       </div>
     )
   }
@@ -296,20 +296,20 @@ export default function SettingsPage() {
 
   function renderUserCard() {
     return (
-      <div className="mx-4 mt-4 rounded-xl bg-[--color-surface] p-4 shadow-sm flex items-center gap-3.5">
+      <div className="mx-4 mt-4 rounded-xl bg-(--color-surface) p-4 shadow-sm flex items-center gap-3.5">
         <div
-          className="size-[52px] rounded-full bg-[--color-primary] flex items-center justify-center text-white text-xl font-bold shrink-0"
+          className="size-[52px] rounded-full bg-(--color-primary) flex items-center justify-center text-white text-xl font-bold shrink-0"
           aria-hidden="true"
         >
           {getInitial(profile!.display_name)}
         </div>
         <div>
           <p className="text-[17px] font-bold text-[#1a1a1a]">{profile!.display_name}</p>
-          <p className="text-[13px] text-[--color-muted] mt-0.5">
+          <p className="text-[13px] text-(--color-muted) mt-0.5">
             {/* Email comes from auth.users — available via the members list */}
             {members.find((m) => m.id === profile!.id)?.email ?? ''}
           </p>
-          <span className="inline-block mt-1 rounded-sm bg-[--color-primary]/8 px-1.5 py-0.5 text-[11px] font-bold text-[--color-primary]">
+          <span className="inline-block mt-1 rounded-sm bg-(--color-primary)/8 px-1.5 py-0.5 text-[11px] font-bold text-(--color-primary)">
             {isOwner
               ? t('settings:householdInfo.owner')
               : t('settings:householdInfo.member')}
@@ -327,14 +327,14 @@ export default function SettingsPage() {
 
     return (
       <div className="mx-4 mt-4">
-        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-[--color-muted]">
+        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-(--color-muted)">
           {t('settings:sections.appearance')}
         </p>
-        <div className="rounded-xl bg-[--color-surface] overflow-hidden shadow-sm">
+        <div className="rounded-xl bg-(--color-surface) overflow-hidden shadow-sm">
           {/* Theme toggle */}
           <SettingsRow
             icon="🎨"
-            iconBg="bg-[--color-primary]/8"
+            iconBg="bg-(--color-primary)/8"
             label={t('settings:theme.label')}
             sublabel={t('settings:theme.sublabel', { active: themeLabel })}
             action={
@@ -374,10 +374,10 @@ export default function SettingsPage() {
   function renderIntegrationsSection() {
     return (
       <div className="mx-4 mt-4">
-        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-[--color-muted]">
+        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-(--color-muted)">
           {t('settings:sections.integrations')}
         </p>
-        <div className="rounded-xl bg-[--color-surface] overflow-hidden shadow-sm">
+        <div className="rounded-xl bg-(--color-surface) overflow-hidden shadow-sm">
           <SettingsRow
             icon="📧"
             iconBg="bg-red-500/8"
@@ -393,12 +393,12 @@ export default function SettingsPage() {
                   type="button"
                   onClick={handleGmailDisconnect}
                   disabled={gmailLoading}
-                  className="rounded-full bg-[--color-success]/10 px-2.5 py-0.5 text-xs font-semibold text-[--color-success]"
+                  className="rounded-full bg-(--color-success)/10 px-2.5 py-0.5 text-xs font-semibold text-(--color-success)"
                 >
                   {t('settings:gmail.connected')}
                 </button>
               ) : (
-                <span className="rounded-full bg-[--color-muted]/15 px-2.5 py-0.5 text-xs font-semibold text-[--color-muted]">
+                <span className="rounded-full bg-(--color-muted)/15 px-2.5 py-0.5 text-xs font-semibold text-(--color-muted)">
                   {t('settings:gmail.notConnected')}
                 </span>
               )
@@ -414,16 +414,16 @@ export default function SettingsPage() {
   function renderHouseholdSection() {
     return (
       <div className="mx-4 mt-4">
-        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-[--color-muted]">
+        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-(--color-muted)">
           {t('settings:sections.household')}
         </p>
-        <div className="rounded-xl bg-[--color-surface] overflow-hidden shadow-sm">
+        <div className="rounded-xl bg-(--color-surface) overflow-hidden shadow-sm">
           {/* Invite Partner */}
           {isOwner && (
             <div>
               <SettingsRow
                 icon="🔗"
-                iconBg="bg-[--color-success]/8"
+                iconBg="bg-(--color-success)/8"
                 label={t('settings:invite.label')}
                 sublabel={t('settings:invite.sublabel')}
                 onClick={inviteCode ? undefined : handleGenerateInvite}
@@ -436,11 +436,11 @@ export default function SettingsPage() {
               />
               {inviteCode && (
                 <div className="px-4 pb-4">
-                  <p className="mb-2.5 text-[13px] font-semibold text-[--color-success]">
+                  <p className="mb-2.5 text-[13px] font-semibold text-(--color-success)">
                     {t('settings:invite.generated')}
                   </p>
-                  <div className="rounded-[10px] border-[1.5px] border-[--color-success]/25 bg-[--color-success]/6 flex flex-col items-center gap-2.5 p-4">
-                    <p className="text-xs font-bold uppercase tracking-[0.4px] text-[--color-success]">
+                  <div className="rounded-[10px] border-[1.5px] border-(--color-success)/25 bg-(--color-success)/6 flex flex-col items-center gap-2.5 p-4">
+                    <p className="text-xs font-bold uppercase tracking-[0.4px] text-(--color-success)">
                       {t('settings:invite.yourCode')}
                     </p>
                     <p
@@ -452,14 +452,14 @@ export default function SettingsPage() {
                     <button
                       type="button"
                       onClick={handleCopyInviteCode}
-                      className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[--color-success] px-0 py-2.5 text-sm font-semibold text-white active:opacity-85"
+                      className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-(--color-success) px-0 py-2.5 text-sm font-semibold text-white active:opacity-85"
                     >
                       <CopyIcon />
                       {inviteCopied
                         ? t('settings:invite.copied')
                         : t('settings:invite.copy')}
                     </button>
-                    <p className="flex items-center gap-1.5 text-xs text-[--color-muted]">
+                    <p className="flex items-center gap-1.5 text-xs text-(--color-muted)">
                       <ClockIcon />
                       {formatExpiry(inviteCode.expiresAt)}
                     </p>
@@ -471,9 +471,9 @@ export default function SettingsPage() {
 
           {/* Household Members */}
           <div>
-            <div className="flex items-center gap-3.5 px-4 pb-2.5 pt-3.5 border-t border-[--color-muted]/12">
+            <div className="flex items-center gap-3.5 px-4 pb-2.5 pt-3.5 border-t border-(--color-muted)/12">
               <div
-                className="size-[34px] rounded-lg flex items-center justify-center text-lg bg-[--color-muted]/10 shrink-0"
+                className="size-[34px] rounded-lg flex items-center justify-center text-lg bg-(--color-muted)/10 shrink-0"
                 aria-hidden="true"
               >
                 🏠
@@ -483,7 +483,7 @@ export default function SettingsPage() {
                   {t('settings:householdInfo.label')}
                 </p>
                 {household && (
-                  <p className="text-xs text-[--color-muted] mt-0.5">{household.name}</p>
+                  <p className="text-xs text-(--color-muted) mt-0.5">{household.name}</p>
                 )}
               </div>
             </div>
@@ -501,13 +501,13 @@ export default function SettingsPage() {
   function renderAccountSection() {
     return (
       <div className="mx-4 mt-4">
-        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-[--color-muted]">
+        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-(--color-muted)">
           {t('settings:sections.account')}
         </p>
-        <div className="rounded-xl bg-[--color-surface] overflow-hidden shadow-sm">
+        <div className="rounded-xl bg-(--color-surface) overflow-hidden shadow-sm">
           <SettingsRow
             icon="🚪"
-            iconBg="bg-[--color-muted]/10"
+            iconBg="bg-(--color-muted)/10"
             label={t('settings:signOut.label')}
             onClick={() => setSignOutModalOpen(true)}
             action={<ChevronIcon />}
@@ -521,7 +521,7 @@ export default function SettingsPage() {
   function renderDangerZone() {
     return (
       <div className="mx-4 mt-4 mb-10">
-        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-[--color-error]">
+        <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-[0.5px] text-(--color-error)">
           ⚠️ {t('settings:sections.dangerZone')}
         </p>
         <div className="rounded-xl border border-red-200 bg-red-50 overflow-hidden">
@@ -563,14 +563,14 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => setSignOutModalOpen(false)}
-              className="flex-1 rounded-md border border-[--color-muted]/30 py-2.5 text-sm font-semibold text-[--color-muted]"
+              className="flex-1 rounded-md border border-(--color-muted)/30 py-2.5 text-sm font-semibold text-(--color-muted)"
             >
               {t('common:cancel')}
             </button>
             <button
               type="button"
               onClick={handleSignOut}
-              className="flex-1 rounded-md bg-[--color-primary] py-2.5 text-sm font-semibold text-white"
+              className="flex-1 rounded-md bg-(--color-primary) py-2.5 text-sm font-semibold text-white"
             >
               {t('settings:signOut.label')}
             </button>
@@ -593,7 +593,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => setTransferOwnerModalOpen(false)}
-              className="flex-1 rounded-md border border-[--color-muted]/30 py-2.5 text-sm font-semibold text-[--color-muted]"
+              className="flex-1 rounded-md border border-(--color-muted)/30 py-2.5 text-sm font-semibold text-(--color-muted)"
             >
               {t('common:cancel')}
             </button>
@@ -601,7 +601,7 @@ export default function SettingsPage() {
               type="button"
               onClick={handleTransferAndDelete}
               disabled={!selectedNewOwner || isDeleting}
-              className="flex-1 rounded-md bg-[--color-error] py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+              className="flex-1 rounded-md bg-(--color-error) py-2.5 text-sm font-semibold text-white disabled:opacity-50"
             >
               {isDeleting
                 ? t('settings:deleteAccount.deletingAccount')
@@ -614,13 +614,13 @@ export default function SettingsPage() {
           {t('settings:deleteAccount.ownerWithMembersPrompt')}
         </p>
         <label className="block">
-          <span className="text-xs font-medium text-[--color-muted]">
+          <span className="text-xs font-medium text-(--color-muted)">
             {t('settings:deleteAccount.selectNewOwner')}
           </span>
           <select
             value={selectedNewOwner}
             onChange={(e) => setSelectedNewOwner(e.target.value)}
-            className="mt-1 w-full rounded-md border border-[--color-muted]/30 bg-[--color-surface] px-3 py-2.5 text-sm text-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[--color-primary]"
+            className="mt-1 w-full rounded-md border border-(--color-muted)/30 bg-(--color-surface) px-3 py-2.5 text-sm text-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-(--color-primary)"
           >
             <option value="">—</option>
             {otherMembers.map((m) => (
@@ -631,7 +631,7 @@ export default function SettingsPage() {
           </select>
         </label>
         {mutationError && (
-          <p className="mt-2 text-xs text-[--color-error]">{mutationError}</p>
+          <p className="mt-2 text-xs text-(--color-error)">{mutationError}</p>
         )}
       </BaseModal>
     )
@@ -655,7 +655,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => setDeleteAccountModalOpen(false)}
-              className="flex-1 rounded-md border border-[--color-muted]/30 py-2.5 text-sm font-semibold text-[--color-muted]"
+              className="flex-1 rounded-md border border-(--color-muted)/30 py-2.5 text-sm font-semibold text-(--color-muted)"
             >
               {t('common:cancel')}
             </button>
@@ -663,7 +663,7 @@ export default function SettingsPage() {
               type="button"
               onClick={handleConfirmDeleteAccount}
               disabled={!canSubmit}
-              className="flex-1 rounded-md bg-[--color-error] py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+              className="flex-1 rounded-md bg-(--color-error) py-2.5 text-sm font-semibold text-white disabled:opacity-50"
             >
               {isDeleting
                 ? t('settings:deleteAccount.deletingAccount')
@@ -674,7 +674,7 @@ export default function SettingsPage() {
       >
         <p className="mb-3 text-sm text-[#1a1a1a]">{warningText}</p>
         <label className="block">
-          <span className="text-xs font-medium text-[--color-muted]">
+          <span className="text-xs font-medium text-(--color-muted)">
             {t('settings:deleteAccount.confirmTypePlaceholder')}
           </span>
           <input
@@ -683,11 +683,11 @@ export default function SettingsPage() {
             onChange={(e) => setDeleteAccountInput(e.target.value)}
             placeholder={confirmWord}
             autoComplete="off"
-            className="mt-1 w-full rounded-md border border-[--color-muted]/30 bg-[--color-surface] px-3 py-2.5 text-sm font-mono tracking-wider text-[#1a1a1a] placeholder:text-[--color-muted]/50 focus:outline-none focus:ring-2 focus:ring-[--color-error]"
+            className="mt-1 w-full rounded-md border border-(--color-muted)/30 bg-(--color-surface) px-3 py-2.5 text-sm font-mono tracking-wider text-[#1a1a1a] placeholder:text-(--color-muted)/50 focus:outline-none focus:ring-2 focus:ring-(--color-error)"
           />
         </label>
         {mutationError && (
-          <p className="mt-2 text-xs text-[--color-error]">{mutationError}</p>
+          <p className="mt-2 text-xs text-(--color-error)">{mutationError}</p>
         )}
       </BaseModal>
     )
@@ -707,7 +707,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => setDeleteHouseholdModalOpen(false)}
-              className="flex-1 rounded-md border border-[--color-muted]/30 py-2.5 text-sm font-semibold text-[--color-muted]"
+              className="flex-1 rounded-md border border-(--color-muted)/30 py-2.5 text-sm font-semibold text-(--color-muted)"
             >
               {t('common:cancel')}
             </button>
@@ -715,7 +715,7 @@ export default function SettingsPage() {
               type="button"
               onClick={handleConfirmDeleteHousehold}
               disabled={!canSubmit}
-              className="flex-1 rounded-md bg-[--color-error] py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+              className="flex-1 rounded-md bg-(--color-error) py-2.5 text-sm font-semibold text-white disabled:opacity-50"
             >
               {isDeleting
                 ? t('settings:deleteHousehold.deletingHousehold')
@@ -730,7 +730,7 @@ export default function SettingsPage() {
           <li>⚠️ {t('settings:deleteHousehold.warning3')}</li>
         </ul>
         <label className="block">
-          <span className="text-xs font-medium text-[--color-muted]">
+          <span className="text-xs font-medium text-(--color-muted)">
             {t('settings:deleteHousehold.confirmTypePlaceholder')}
           </span>
           <input
@@ -739,11 +739,11 @@ export default function SettingsPage() {
             onChange={(e) => setDeleteHouseholdInput(e.target.value)}
             placeholder={confirmWord}
             autoComplete="off"
-            className="mt-1 w-full rounded-md border border-[--color-muted]/30 bg-[--color-surface] px-3 py-2.5 text-sm font-mono tracking-wider text-[#1a1a1a] placeholder:text-[--color-muted]/50 focus:outline-none focus:ring-2 focus:ring-[--color-error]"
+            className="mt-1 w-full rounded-md border border-(--color-muted)/30 bg-(--color-surface) px-3 py-2.5 text-sm font-mono tracking-wider text-[#1a1a1a] placeholder:text-(--color-muted)/50 focus:outline-none focus:ring-2 focus:ring-(--color-error)"
           />
         </label>
         {mutationError && (
-          <p className="mt-2 text-xs text-[--color-error]">{mutationError}</p>
+          <p className="mt-2 text-xs text-(--color-error)">{mutationError}</p>
         )}
       </BaseModal>
     )
@@ -755,11 +755,11 @@ export default function SettingsPage() {
 
   return (
     <main
-      className="min-h-screen bg-[--color-background] pb-20"
+      className="min-h-screen bg-(--color-background) pb-20"
       data-testid="settings-page"
     >
       {/* Header */}
-      <header className="flex items-center gap-2.5 bg-[--color-primary] px-4 py-4">
+      <header className="flex items-center gap-2.5 bg-(--color-primary) px-4 py-4">
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -824,8 +824,8 @@ function SettingsRow({
       onKeyDown={onClick ? (e) => e.key === 'Enter' && onClick() : undefined}
       className={[
         'flex items-center gap-3.5 px-4 py-3.5',
-        !isLast && 'border-b border-[--color-muted]/12',
-        onClick ? 'cursor-pointer active:bg-[--color-muted]/5' : '',
+        !isLast && 'border-b border-(--color-muted)/12',
+        onClick ? 'cursor-pointer active:bg-(--color-muted)/5' : '',
         isLoading ? 'opacity-60' : '',
       ]
         .filter(Boolean)
@@ -840,7 +840,7 @@ function SettingsRow({
       <div className="flex-1 min-w-0">
         <p className="text-[15px] font-medium text-[#1a1a1a]">{label}</p>
         {sublabel && (
-          <p className="text-xs text-[--color-muted] mt-0.5">{sublabel}</p>
+          <p className="text-xs text-(--color-muted) mt-0.5">{sublabel}</p>
         )}
       </div>
       {action}
@@ -874,12 +874,12 @@ function DangerRow({ icon, label, sublabel, onClick, isLast }: DangerRowProps) {
         {icon}
       </span>
       <div className="flex-1 min-w-0">
-        <p className="text-[15px] font-medium text-[--color-error]">{label}</p>
+        <p className="text-[15px] font-medium text-(--color-error)">{label}</p>
         {sublabel && (
-          <p className="text-xs text-[--color-error]/70 mt-0.5">{sublabel}</p>
+          <p className="text-xs text-(--color-error)/70 mt-0.5">{sublabel}</p>
         )}
       </div>
-      <ChevronIcon className="text-[--color-error]" />
+      <ChevronIcon className="text-(--color-error)" />
     </div>
   )
 }
@@ -902,7 +902,7 @@ function Toggle({ on, onChange, 'data-testid': testId, 'aria-label': ariaLabel }
       onClick={onChange}
       className={[
         'relative shrink-0 w-[46px] h-[26px] rounded-full transition-colors',
-        on ? 'bg-[--color-primary]' : 'bg-[--color-muted]/35',
+        on ? 'bg-(--color-primary)' : 'bg-(--color-muted)/35',
       ].join(' ')}
     >
       <span
@@ -924,7 +924,7 @@ function MemberRow({ member, index }: MemberRowProps) {
   const { t } = useTranslation('settings')
   const isOwner = member.role === 'owner'
   return (
-    <div className="flex items-center gap-2.5 px-4 py-2.5 border-t border-[--color-muted]/12">
+    <div className="flex items-center gap-2.5 px-4 py-2.5 border-t border-(--color-muted)/12">
       <div
         className={`size-8 rounded-full flex items-center justify-center text-[13px] font-bold text-white shrink-0 ${avatarColorClass(index)}`}
         aria-hidden="true"
@@ -942,8 +942,8 @@ function MemberRow({ member, index }: MemberRowProps) {
         className={[
           'rounded-sm px-1.5 py-0.5 text-[11px] font-semibold',
           isOwner
-            ? 'bg-[--color-primary]/8 text-[--color-primary]'
-            : 'bg-[--color-muted]/12 text-[--color-muted]',
+            ? 'bg-(--color-primary)/8 text-(--color-primary)'
+            : 'bg-(--color-muted)/12 text-(--color-muted)',
         ].join(' ')}
       >
         {isOwner
@@ -954,7 +954,7 @@ function MemberRow({ member, index }: MemberRowProps) {
   )
 }
 
-function ChevronIcon({ className = 'text-[--color-muted]' }: { className?: string | undefined }) {
+function ChevronIcon({ className = 'text-(--color-muted)' }: { className?: string | undefined }) {
   return (
     <svg
       width="16"
