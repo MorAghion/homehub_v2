@@ -9,6 +9,7 @@ import enHome from './locales/en/home.json'
 import enShopping from './locales/en/shopping.json'
 import enVouchers from './locales/en/vouchers.json'
 import enReservations from './locales/en/reservations.json'
+import enBills from './locales/en/bills.json'
 import heCommon from './locales/he/common.json'
 import heSettings from './locales/he/settings.json'
 import heAuth from './locales/he/auth.json'
@@ -17,6 +18,7 @@ import heHome from './locales/he/home.json'
 import heShopping from './locales/he/shopping.json'
 import heVouchers from './locales/he/vouchers.json'
 import heReservations from './locales/he/reservations.json'
+import heBills from './locales/he/bills.json'
 
 void i18n.use(initReactI18next).init({
   lng: localStorage.getItem('homehub-language') ?? 'en',
@@ -31,6 +33,7 @@ void i18n.use(initReactI18next).init({
       shopping: enShopping,
       vouchers: enVouchers,
       reservations: enReservations,
+      bills: enBills,
     },
     he: {
       common: heCommon,
@@ -41,9 +44,10 @@ void i18n.use(initReactI18next).init({
       shopping: heShopping,
       vouchers: heVouchers,
       reservations: heReservations,
+      bills: heBills,
     },
   },
-  ns: ['common', 'settings', 'auth', 'tasks', 'home', 'shopping', 'vouchers', 'reservations'],
+  ns: ['common', 'settings', 'auth', 'tasks', 'home', 'shopping', 'vouchers', 'reservations', 'bills'],
   defaultNS: 'common',
   interpolation: {
     escapeValue: false,

@@ -12,6 +12,8 @@
     "shopping": "Shopping",
     "tasks": "Tasks",
     "vouchers": "Vouchers",
-    "reservations": "Reservations"
-  }
+    "reservations": "Reservations",
+    "bills": "Bills"
+  },
+  "upcoming": "Upcoming"
 }

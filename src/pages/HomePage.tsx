@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../contexts/AuthContext'
 import { useUrgentTasks } from '../hooks/useUrgentTasks'
+import { useCalendarItems } from '../hooks/useCalendarItems'
+import CalendarCarousel from '../components/shared/CalendarCarousel'
 
 export default function HomePage() {
   const { t } = useTranslation('home')
@@ -18,6 +20,7 @@ export default function HomePage() {
   const urgent = useUrgentTasks(household?.id ?? null)
 
   const urgentCount = urgent.totalCount
+  const calendarDays = useCalendarItems(household?.id ?? null)
 
   const hubs = [
     {
@@ -51,6 +54,14 @@ export default function HomePage() {
       emoji: '📅',
       bg: 'bg-purple-50',
       iconBg: 'bg-purple-600',
+    },
+    {
+      key: 'bills',
+      label: t('hubs.bills'),
+      path: '/bills',
+      emoji: '🧾',
+      bg: 'bg-red-50',
+      iconBg: 'bg-red-600',
     },
   ]
 
@@ -93,6 +104,9 @@ export default function HomePage() {
           </span>
         </button>
       )}
+
+      {/* Calendar Carousel */}
+      <CalendarCarousel days={calendarDays} />
 
       {/* Hub cards grid — §3.2 */}
       <main className="flex-1 px-4 py-5 pb-24">

@@ -1,0 +1,14 @@
+{
+  "title": "Bills",
+  "pending": "Pending",
+  "paid": "Paid",
+  "ignored": "Ignored",
+  "markPaid": "Mark Paid",
+  "empty": "No bills here",
+  "filter": {
+    "all": "All",
+    "pending": "Pending",
+    "paid": "Paid",
+    "ignored": "Ignored"
+  }
+}

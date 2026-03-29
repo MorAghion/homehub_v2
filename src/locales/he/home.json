@@ -12,6 +12,8 @@
     "shopping": "קניות",
     "tasks": "משימות",
     "vouchers": "קופונים",
-    "reservations": "הזמנות"
-  }
+    "reservations": "הזמנות",
+    "bills": "חשבונות"
+  },
+  "upcoming": "קרוב"
 }

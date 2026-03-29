@@ -12,6 +12,7 @@ const ShoppingHubPage = lazy(() => import('./pages/ShoppingHubPage'))
 const TasksHubPage = lazy(() => import('./pages/TasksHubPage'))
 const VouchersHubPage = lazy(() => import('./pages/VouchersHubPage'))
 const ReservationsHubPage = lazy(() => import('./pages/ReservationsHubPage'))
+const BillsHubPage = lazy(() => import('./pages/BillsHubPage'))
 
 function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const { session, isLoading, household } = useSession()
@@ -104,6 +105,14 @@ export default function App() {
             element={
               <ProtectedLayout>
                 <ReservationsHubPage />
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path="/bills"
+            element={
+              <ProtectedLayout>
+                <BillsHubPage />
               </ProtectedLayout>
             }
           />
