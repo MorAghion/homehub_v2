@@ -4,9 +4,11 @@ import { initReactI18next } from 'react-i18next'
 import enCommon from './locales/en/common.json'
 import enSettings from './locales/en/settings.json'
 import enAuth from './locales/en/auth.json'
+import enTasks from './locales/en/tasks.json'
 import heCommon from './locales/he/common.json'
 import heSettings from './locales/he/settings.json'
 import heAuth from './locales/he/auth.json'
+import heTasks from './locales/he/tasks.json'
 
 void i18n.use(initReactI18next).init({
   lng: localStorage.getItem('homehub-language') ?? 'en',
@@ -16,14 +18,16 @@ void i18n.use(initReactI18next).init({
       common: enCommon,
       settings: enSettings,
       auth: enAuth,
+      tasks: enTasks,
     },
     he: {
       common: heCommon,
       settings: heSettings,
       auth: heAuth,
+      tasks: heTasks,
     },
   },
-  ns: ['common', 'settings', 'auth'],
+  ns: ['common', 'settings', 'auth', 'tasks'],
   defaultNS: 'common',
   interpolation: {
     escapeValue: false,

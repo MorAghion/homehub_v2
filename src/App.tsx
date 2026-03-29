@@ -41,6 +41,14 @@ export default function App() {
             }
           />
           <Route
+            path="/tasks"
+            element={
+              <ProtectedRoute>
+                <TasksHubPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/tasks/:id"
             element={
               <ProtectedRoute>

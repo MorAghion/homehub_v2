@@ -1,0 +1,79 @@
+{
+  "hub": {
+    "title": "Tasks",
+    "subtitle": "{{count}} sub-hubs",
+    "newSubHub": "New sub-hub",
+    "emptyState": "No task lists yet. Tap + to create one.",
+    "editMode": "Edit",
+    "doneEditing": "Done"
+  },
+  "urgentTasks": {
+    "title": "Urgent Tasks",
+    "subtitle": "{{count}} urgent items",
+    "emptyState": "No urgent tasks. Nice work!",
+    "tasksSection": "Urgent Tasks",
+    "billsSection": "Overdue Bills",
+    "payNow": "Pay Now"
+  },
+  "taskCard": {
+    "dueToday": "Due today",
+    "overdue": "Overdue",
+    "due": "Due {{date}}",
+    "urgentFlag": "Urgent",
+    "noAssignee": "Unassigned"
+  },
+  "urgency": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "status": {
+    "todo": "To do",
+    "in_progress": "In progress",
+    "done": "Done"
+  },
+  "modal": {
+    "createTitle": "New Task",
+    "editTitle": "Edit Task",
+    "titleLabel": "Title",
+    "titlePlaceholder": "What needs to be done?",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Optional details…",
+    "statusLabel": "Status",
+    "urgencyLabel": "Urgency",
+    "isUrgentLabel": "Mark as urgent",
+    "isUrgentHint": "Appears in Urgent Tasks view",
+    "assigneeLabel": "Assignee",
+    "assigneeNone": "Unassigned",
+    "dueDateLabel": "Due date",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Any additional notes…",
+    "saveCreate": "Create Task",
+    "saveEdit": "Save Changes",
+    "deleteConfirm": "Delete Task",
+    "deleteMessage": "Are you sure you want to delete this task?"
+  },
+  "editMode": {
+    "selected": "{{count}} selected",
+    "deleteSelected": "Delete Selected",
+    "deleteConfirm": "Delete {{count}} tasks?",
+    "deleteMessage": "This will permanently delete {{count}} tasks.",
+    "clearCompleted": "Clear Completed",
+    "clearConfirm": "Clear {{count}} completed tasks?",
+    "clearMessage": "This will permanently delete {{count}} completed tasks."
+  },
+  "subHub": {
+    "tasks": "{{count}} task",
+    "tasks_plural": "{{count}} tasks",
+    "createTitle": "New List",
+    "createLabel": "List name",
+    "createPlaceholder": "e.g. Weekly Chores",
+    "editTitle": "Edit List",
+    "deleteConfirm": "Delete List",
+    "deleteMessage": "This will permanently delete this list and all its tasks."
+  },
+  "flashlight": {
+    "goToSource": "Go to source"
+  }
+}

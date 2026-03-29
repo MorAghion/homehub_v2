@@ -1,0 +1,79 @@
+{
+  "hub": {
+    "title": "משימות",
+    "subtitle": "{{count}} רשימות",
+    "newSubHub": "רשימה חדשה",
+    "emptyState": "אין רשימות עדיין. לחץ + ליצירת רשימה.",
+    "editMode": "עריכה",
+    "doneEditing": "סיום"
+  },
+  "urgentTasks": {
+    "title": "משימות דחופות",
+    "subtitle": "{{count}} פריטים דחופים",
+    "emptyState": "אין משימות דחופות. עבודה מצוינת!",
+    "tasksSection": "משימות דחופות",
+    "billsSection": "חשבונות באיחור",
+    "payNow": "שלם עכשיו"
+  },
+  "taskCard": {
+    "dueToday": "מסתיים היום",
+    "overdue": "באיחור",
+    "due": "מסתיים {{date}}",
+    "urgentFlag": "דחוף",
+    "noAssignee": "לא מוקצה"
+  },
+  "urgency": {
+    "low": "נמוך",
+    "medium": "בינוני",
+    "high": "גבוה",
+    "critical": "קריטי"
+  },
+  "status": {
+    "todo": "לביצוע",
+    "in_progress": "בתהליך",
+    "done": "הושלם"
+  },
+  "modal": {
+    "createTitle": "משימה חדשה",
+    "editTitle": "עריכת משימה",
+    "titleLabel": "כותרת",
+    "titlePlaceholder": "מה צריך לעשות?",
+    "descriptionLabel": "תיאור",
+    "descriptionPlaceholder": "פרטים נוספים…",
+    "statusLabel": "סטטוס",
+    "urgencyLabel": "דחיפות",
+    "isUrgentLabel": "סמן כדחוף",
+    "isUrgentHint": "יופיע בתצוגת משימות דחופות",
+    "assigneeLabel": "אחראי",
+    "assigneeNone": "לא מוקצה",
+    "dueDateLabel": "תאריך יעד",
+    "notesLabel": "הערות",
+    "notesPlaceholder": "הערות נוספות…",
+    "saveCreate": "צור משימה",
+    "saveEdit": "שמור שינויים",
+    "deleteConfirm": "מחק משימה",
+    "deleteMessage": "האם אתה בטוח שברצונך למחוק משימה זו?"
+  },
+  "editMode": {
+    "selected": "{{count}} נבחרו",
+    "deleteSelected": "מחק נבחרים",
+    "deleteConfirm": "למחוק {{count}} משימות?",
+    "deleteMessage": "פעולה זו תמחק לצמיתות {{count}} משימות.",
+    "clearCompleted": "נקה שהושלמו",
+    "clearConfirm": "לנקות {{count}} משימות שהושלמו?",
+    "clearMessage": "פעולה זו תמחק לצמיתות {{count}} משימות שהושלמו."
+  },
+  "subHub": {
+    "tasks": "{{count}} משימה",
+    "tasks_plural": "{{count}} משימות",
+    "createTitle": "רשימה חדשה",
+    "createLabel": "שם הרשימה",
+    "createPlaceholder": "לדוגמה: מטלות שבועיות",
+    "editTitle": "ערוך רשימה",
+    "deleteConfirm": "מחק רשימה",
+    "deleteMessage": "פעולה זו תמחק לצמיתות את הרשימה וכל המשימות שבה."
+  },
+  "flashlight": {
+    "goToSource": "עבור למקור"
+  }
+}
