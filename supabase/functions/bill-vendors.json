@@ -1,0 +1,21 @@
+{
+  "vendors": [
+    { "id": "pelephone",   "name": "פלאפון",       "patterns": ["פלאפון", "pelephone"],                "category": "telecom" },
+    { "id": "partner",     "name": "פרטנר",         "patterns": ["פרטנר", "partner", "orange"],         "category": "telecom" },
+    { "id": "hot",         "name": "HOT",           "patterns": ["hot mobile", "hot net", "הוט"],        "category": "telecom" },
+    { "id": "bezeq",       "name": "בזק",           "patterns": ["בזק", "bezeq"],                        "category": "telecom" },
+    { "id": "yes",         "name": "yes",           "patterns": ["yes satellite", "יס "],                "category": "telecom" },
+    { "id": "cellcom",     "name": "סלקום",         "patterns": ["סלקום", "cellcom"],                    "category": "telecom" },
+    { "id": "019",         "name": "019",           "patterns": ["019 mobile", "019 נט"],                "category": "telecom" },
+    { "id": "paz",         "name": "פז",            "patterns": ["פז", "paz energy", "paz oil"],         "category": "energy" },
+    { "id": "delek",       "name": "דלק",           "patterns": ["דלק", "delek"],                        "category": "energy" },
+    { "id": "ten",         "name": "תן גז",         "patterns": ["תן גז", "ten gas"],                    "category": "energy" },
+    { "id": "sonol",       "name": "סונול",         "patterns": ["סונול", "sonol"],                      "category": "energy" },
+    { "id": "superpharm",  "name": "סופר-פארם",     "patterns": ["סופר פארם", "super-pharm", "superpharm"], "category": "pharmacy" },
+    { "id": "ramilevi",    "name": "רמי לוי",       "patterns": ["רמי לוי", "rami levy"],                "category": "grocery" },
+    { "id": "shufersal",   "name": "שופרסל",        "patterns": ["שופרסל", "shufersal"],                 "category": "grocery" },
+    { "id": "mega",        "name": "מגה",           "patterns": ["מגה", "mega market", "mega בול"],      "category": "grocery" },
+    { "id": "iec",         "name": "חברת חשמל",     "patterns": ["חברת חשמל", "iec", "israel electric"], "category": "electricity" },
+    { "id": "water",       "name": "מי אביב",       "patterns": ["מי אביב", "מי רבה", "מי שרון"],        "category": "water" }
+  ]
+}
